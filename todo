@@ -1,0 +1,29 @@
+1. set up working space for the game (tiles and sky)
+
+2. add mario sprite w/ movement
+
+3. add gravity and make sure of timing and fps
+
+4. add keyboard inputs (movement, jump, pause menu) //make sure when both arrow keys are pushed, movement doesnt permenantly stop
+
+5. add collision detection 
+
+6. add scrolling for the rest of the map
+
+7. add chance blocks and pipes
+
+8. animate mario movement and chance blocks (flickering question mark) 
+
+9. add acceleration and slowing down mechanics 
+
+10. add spawning for sprites
+
+11. add interactions with the sprite entities
+
+12. add audio, score, timer and coin collection 
+
+13. create pause menu with restart and resume options
+
+//optionals
+
+14. add level progression
