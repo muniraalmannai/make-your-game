@@ -1,29 +1,31 @@
-1. set up working space for the game (tiles and sky) 
+1. set up boundaries for the game (basic) 
 
-2. add mario sprite w/ movement
+2. add pacman sprite w/ movement
 
-3. add gravity and make sure of timing and fps
+3. make sure of fps 
 
-4. add keyboard inputs (movement, jump, pause menu) //make sure when both arrow keys are pushed, movement doesnt permenantly stop
+4. add collision detection 
 
-5. add collision detection 
+5. swap boundaries to images (more complex design too)
 
-6. add scrolling for the rest of the map
+6. create and remove pellets on collision
 
-7. add chance blocks and pipes
+7. add score, timer & lives
 
-8. animate mario movement and chance blocks (flickering question mark) 
+8. create ghosts
 
-9. add acceleration and slowing down mechanics 
+9. create power-up
 
-10. add spawning for sprites
+10. add pacman and ghost animations
 
-11. add interactions with the sprite entities
+11. create pause menu with restart and resume options
 
-12. add audio, score, timer and coin collection 
-
-13. create pause menu with restart and resume options
+12. create a win/lose condition and message
 
 //optionals
 
-14. add level progression
+13. add level progression
+
+14. add sound
+
+
