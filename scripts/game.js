@@ -7,14 +7,15 @@ gameArea.style.height = `${innerHeight}px`;
 gameArea.style.overflow = 'hidden';
 gameArea.style.border = '1px solid black';
 
-class Boundary {
+//creates the map boundaries
+class Boundary { 
     static width = 40; 
     static height = 40; 
 
     constructor({ position }) {
         this.position = position;
-        this.width = 40;
-        this.height = 40;
+        this.width = Boundary.width;
+        this.height = Boundary.height;
 
         this.element = document.createElement('div');
         this.element.style.position = 'absolute';
@@ -29,7 +30,34 @@ class Boundary {
 
 }
 
-const map = [
+//creates pac-man
+class Player {
+    constructor({ position, velocity }) {
+        this.position = position;
+        this.velocity = velocity;
+        this.radius = 15;
+
+        this.element = document.createElement('div');
+        this.element.style.position = 'absolute';
+        this.element.style.width = `${this.radius * 2}px`;
+        this.element.style.height = `${this.radius * 2}px`;
+        this.element.style.backgroundColor = 'yellow';
+        this.element.style.borderRadius = '50%';
+        this.element.style.left = `${this.position.x - this.radius}px`;
+        this.element.style.top = `${this.position.y - this.radius}px`;
+
+        gameArea.appendChild(this.element);
+    }
+
+    draw() {
+        this.element.style.left = `${this.position.x - this.radius}px`;
+        this.element.style.top = `${this.position.y - this.radius}px`;
+    }
+}
+
+
+// defines how the map boundaries look
+const map = [ 
     ['-', '-', '-', '-', '-', '-', '-'],
     ['-', ' ', ' ', ' ', ' ', ' ', '-'],
     ['-', ' ', '-', '-', '-', ' ', '-'],
@@ -38,8 +66,21 @@ const map = [
 ]
 
 
-const boundaries = []
+const boundaries = [];
 
+//defines pac-man attributes
+const player = new Player({
+    position: {
+        x: Boundary.width + Boundary.width / 2,
+        y: Boundary.height + Boundary.height / 2
+    },
+    velocity: {
+        x: 0,
+        y: 0
+    }
+});
+
+//loops through map to create boundaries
 map.forEach((row, i) => {
     row.forEach((symbol, j) => {
         switch(symbol) {
@@ -56,5 +97,3 @@ map.forEach((row, i) => {
         }
     })
 })
-
-
