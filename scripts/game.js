@@ -61,9 +61,6 @@ class Player {
     }
 }
 
-
-
-
 const boundaries = [];
 
 //defines pac-man attributes
@@ -97,11 +94,15 @@ let lastKey = '';
 
 // defines how the map boundaries look
 const map = [ 
-    ['-', '-', '-', '-', '-', '-', '-'],
-    ['-', ' ', ' ', ' ', ' ', ' ', '-'],
-    ['-', ' ', '-', '-', '-', ' ', '-'],
-    ['-', ' ', ' ', ' ', ' ', ' ', '-'],
-    ['-', '-', '-', '-', '-', '-', '-']
+    ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    ['-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],
+    ['-', ' ', '-', '-', ' ', '-', '-', ' ', '-'],
+    ['-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],
+    ['-', ' ', '-', '-', ' ', '-', '-', ' ', '-'],
+    ['-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],
+    ['-', ' ', '-', '-', ' ', '-', '-', ' ', '-'],
+    ['-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],
+    ['-', '-', '-', '-', '-', '-', '-', '-', '-']
 ]
 
 
@@ -123,22 +124,114 @@ map.forEach((row, i) => {
     })
 })
 
-function animate() {
-    requestAnimationFrame(animate);
+//checks for collision
+function collision({
+    circle,
+    rectangle
+}) {
+    return (
+        circle.position.y - circle.radius + circle.velocity.y <= rectangle.position.y + rectangle.height 
+            && circle.position.x + circle.radius + circle.velocity.x >= rectangle.position.x 
+            && circle.position.y + circle.radius + circle.velocity.y >= rectangle.position.y
+            && circle.position.x - circle.radius + circle.velocity.x <= rectangle.position.x + rectangle.width     
+    )    
+}
 
-    player.update(); 
-    player.velocity.x = 0;
-    player.velocity.y = 0;
+
+function animate() {
+    requestAnimationFrame(animate); 
 
     if (keys.w.pressed && lastKey === 'w') {
-        player.velocity.y = -5;
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i];
+            if (
+                collision({
+                    circle: {...player, velocity: {
+                        x: 0, 
+                        y: -5
+                    }}, 
+                    rectangle: boundary
+                })
+            ) {
+                player.velocity.y = 0;
+                break; 
+            } else {
+                player.velocity.y = -5;
+            }
+        }
     } else if (keys.a.pressed && lastKey === 'a') {
-        player.velocity.x = -5;
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i];
+            if (
+                collision({
+                    circle: {...player, velocity: {
+                        x: -5, 
+                        y: 0
+                    }}, 
+                    rectangle: boundary
+                })
+            ) {
+                player.velocity.x = 0;
+                break; 
+            } else {
+                player.velocity.x = -5;
+            }
+        }
     } else if (keys.s.pressed && lastKey === 's') {
-        player.velocity.y = 5;
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i];
+            if (
+                collision({
+                    circle: {...player, velocity: {
+                        x: 0, 
+                        y: 5
+                    }}, 
+                    rectangle: boundary
+                })
+            ) {
+                player.velocity.y = 0;
+                break; 
+            } else {
+                player.velocity.y = 5;
+            }
+        }
     } else if (keys.d.pressed && lastKey === 'd') {
-        player.velocity.x = 5;
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i];
+            if (
+                collision({
+                    circle: {...player, velocity: {
+                        x: 5, 
+                        y: 0
+                    }}, 
+                    rectangle: boundary
+                })
+            ) {
+                player.velocity.x = 0;
+                break; 
+            } else {
+                player.velocity.x = 5;
+            }
+        }
     }
+
+    //adds collision
+    boundaries.forEach((boundary) => {
+        if (
+            collision({
+             circle: player, 
+             rectangle: boundary
+        }))
+            {
+                player.velocity.x = 0;
+                player.velocity.y = 0;
+        }    
+    });
+     
+
+    player.update(); 
+    // player.velocity.x = 0;
+    // player.velocity.y = 0;   
 }
 
 animate();
@@ -165,6 +258,7 @@ addEventListener('keydown', ({ key }) => {
             break;
     }
 })
+
 
 addEventListener('keyup', ({ key }) => {
   
