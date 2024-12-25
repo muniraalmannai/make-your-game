@@ -38,6 +38,7 @@ const keys = {
 let lastKey = '';
 
 
+
 //loops through map to create boundaries
 map.forEach((row, i) => {
     row.forEach((symbol, j) => {
@@ -188,6 +189,58 @@ pellets.forEach((pellet, index) => {
     //player.velocity.y = 0;   
 }
 
+let isPaused = false;
+
+function togglePause() {
+    if (isPaused) {
+        unpause();
+        isPaused = false;
+    } else {
+        pause();
+        isPaused = true;
+    }
+}
+
+function pause() {
+
+    clearInterval(animate);
+    
+    let pauseOverlay = document.getElementById('pause-overlay');
+
+    if (!pauseOverlay) {    
+        pauseOverlay = document.createElement('div');
+        pauseOverlay.id = 'pause-overlay';
+        pauseOverlay.style.position = 'absolute';
+        pauseOverlay.style.top = '0';
+        pauseOverlay.style.left = '0';
+        pauseOverlay.style.width = '100%';
+        pauseOverlay.style.height = '100%';
+        pauseOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        pauseOverlay.style.color = 'white';
+        pauseOverlay.style.fontFamily = 'Helvetica, Arial, sans-serif';
+        pauseOverlay.style.fontSize = '60px';
+        pauseOverlay.style.textAlign = 'center';
+        pauseOverlay.style.display = 'flex';
+        pauseOverlay.style.alignItems = 'center';
+        pauseOverlay.style.justifyContent = 'center';
+        pauseOverlay.textContent = 'Game Paused';
+        document.body.appendChild(pauseOverlay);  
+    } else {
+        pauseOverlay.style.display = 'flex';
+    }
+}
+
+function unpause() {
+    const pauseOverlay = document.getElementById('pause-overlay');
+    
+    if (pauseOverlay) {
+        pauseOverlay.style.display = 'none';
+    }
+
+    // interval = setInterval(animate, 1000 / 60);
+}
+
+
 animate();
 
 
@@ -209,6 +262,9 @@ addEventListener('keydown', ({ key }) => {
         case 'd':
             keys.d.pressed = true;
             lastKey = 'd';
+            break;
+        case 'p':
+            togglePause();
             break;
     }
 })
