@@ -1,65 +1,6 @@
-const gameArea = document.createElement('div');
-document.body.appendChild(gameArea);
+import {Boundary,Player} from './structure.js'
+import {map} from './map.js'
 
-// gameArea.style.position = 'relative';
-gameArea.style.width = `${innerWidth}px`;
-gameArea.style.height = `${innerHeight}px`;
-gameArea.style.overflow = 'hidden';
-gameArea.style.border = '1px solid black';
-
-//creates the map boundaries
-class Boundary { 
-    static width = 40; 
-    static height = 40; 
-
-    constructor({ position }) {
-        this.position = position;
-        this.width = Boundary.width;
-        this.height = Boundary.height;
-
-        this.element = document.createElement('div');
-        this.element.style.position = 'absolute';
-        this.element.style.width = `${this.width}px`;
-        this.element.style.height = `${this.height}px`;
-        this.element.style.backgroundColor = 'blue';
-        this.element.style.left = `${this.position.x}px`;
-        this.element.style.top = `${this.position.y}px`;
-
-        gameArea.appendChild(this.element);
-    }
-
-}
-
-//creates pac-man
-class Player {
-    constructor({ position, velocity }) {
-        this.position = position;
-        this.velocity = velocity;
-        this.radius = 15;
-
-        this.element = document.createElement('div');
-        this.element.style.position = 'absolute';
-        this.element.style.width = `${this.radius * 2}px`;
-        this.element.style.height = `${this.radius * 2}px`;
-        this.element.style.backgroundColor = 'yellow';
-        this.element.style.borderRadius = '50%';
-        this.element.style.left = `${this.position.x - this.radius}px`;
-        this.element.style.top = `${this.position.y - this.radius}px`;
-
-        gameArea.appendChild(this.element);
-    }
-
-    draw() {
-        this.element.style.left = `${this.position.x - this.radius}px`;
-        this.element.style.top = `${this.position.y - this.radius}px`;
-    }
-
-    update() {
-        this.draw();
-        this.position.x += this.velocity.x; 
-        this.position.y += this.velocity.y;
-    }
-}
 
 const boundaries = [];
 
@@ -92,19 +33,6 @@ const keys = {
 
 let lastKey = '';
 
-// defines how the map boundaries look
-const map = [ 
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],
-    ['-', ' ', '-', '-', ' ', '-', '-', ' ', '-'],
-    ['-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],
-    ['-', ' ', '-', '-', ' ', '-', '-', ' ', '-'],
-    ['-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],
-    ['-', ' ', '-', '-', ' ', '-', '-', ' ', '-'],
-    ['-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-']
-]
-
 
 //loops through map to create boundaries
 map.forEach((row, i) => {
@@ -119,7 +47,7 @@ map.forEach((row, i) => {
                         }
                     })
                 )
-                break;
+            break;
         }
     })
 })
@@ -230,8 +158,8 @@ function animate() {
      
 
     player.update(); 
-    // player.velocity.x = 0;
-    // player.velocity.y = 0;   
+    //player.velocity.x = 0;
+    //player.velocity.y = 0;   
 }
 
 animate();
@@ -269,7 +197,7 @@ addEventListener('keyup', ({ key }) => {
         case 'a':
             keys.a.pressed = false;
             break;
-        case 's':
+        case 's':3
             keys.s.pressed = false;
             break;
         case 'd':
