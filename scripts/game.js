@@ -7,8 +7,8 @@ const boundaries = [];
 //defines pac-man attributes
 const player = new Player({
     position: {
-        x: Boundary.width + Boundary.width / 2,
-        y: Boundary.height + Boundary.height / 2
+        x: Boundary.width * 10 + Boundary.width / 2,
+        y: Boundary.width * 9 + Boundary.width / 2
     },
     velocity: {
         x: 0,
@@ -143,7 +143,7 @@ function animate() {
         }
     }
 
-    //adds collision
+    // Collision logic
     boundaries.forEach((boundary) => {
         if (
             collision({
@@ -156,6 +156,17 @@ function animate() {
         }    
     });
      
+
+    // Warping logic
+    if (player.position.y >= Boundary.height * 9 && player.position.y <= Boundary.height * 10) {
+    if (player.position.x > Boundary.width * 20) {
+        player.position.x = Boundary.width;
+    }
+    if (player.position.x < Boundary.width) {
+        player.position.x = Boundary.width * 20;
+    }
+}
+
 
     player.update(); 
     //player.velocity.x = 0;
