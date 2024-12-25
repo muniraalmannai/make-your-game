@@ -1,18 +1,19 @@
-import {Boundary,Player, gameArea} from './structure.js'
+import {Boundary,Player,gameArea} from './structure.js'
 import {map} from './map.js'
-import { Pellet, createPellets } from './pellets.js';
-import { ScoreManager } from './scoring.js';
+import { createPellets } from './pellets.js';
+import { ScoreManager,  LifeCount } from './scoring.js';
+import { Ghost } from './ghosts.js';
 
 const boundaries = [];
 const pellets = createPellets(map, Boundary);
 const scoreManager = new ScoreManager(gameArea);
-
+const lifeCount = new LifeCount(gameArea);
 
 //defines pac-man attributes
 const player = new Player({
     position: {
         x: Boundary.width * 10 + Boundary.width / 2,
-        y: Boundary.width * 9 + Boundary.width / 2
+        y: Boundary.width * 3 + Boundary.width / 2
     },
     velocity: {
         x: 0,
@@ -58,7 +59,7 @@ map.forEach((row, i) => {
 })
 
 //checks for collision
-function collision({
+export function collision({
     circle,
     rectangle
 }) {
@@ -69,6 +70,42 @@ function collision({
             && circle.position.x - circle.radius + circle.velocity.x <= rectangle.position.x + rectangle.width     
     )    
 }
+
+
+export const ghosts = [
+    new Ghost({
+        position: {
+            x: Boundary.width * 8 + Boundary.width / 2,
+            y: Boundary.width * 9 + Boundary.width / 2 
+        },
+        color: 'red',
+        behavior: 'blinky'  // Changed from 'chase'
+    }),
+    new Ghost({
+        position: {
+            x: Boundary.width * 9 + Boundary.width / 2,
+            y: Boundary.width * 9 + Boundary.width / 2
+        },
+        color: 'pink',
+        behavior: 'pinky'   // Changed from 'predict'
+    }),
+    new Ghost({
+        position: {
+            x: Boundary.width * 11 + Boundary.width / 2,
+            y: Boundary.width * 9 + Boundary.width / 2
+        },
+        color: 'cyan',
+        behavior: 'inky'    // Changed from 'patrol'
+    }),
+    new Ghost({
+        position: {
+            x: Boundary.width * 12 + Boundary.width / 2,
+            y: Boundary.width * 9 + Boundary.width / 2
+        },
+        color: 'orange',
+        behavior: 'clyde'   // Changed from 'patrol'
+    })
+];
 
 
 function animate() {
@@ -148,6 +185,25 @@ function animate() {
         }
     }
 
+    ghosts.forEach(ghost => {
+        ghost.update(player, boundaries);
+        
+        // Check for ghost collision with player
+        if (Math.hypot(
+            ghost.position.x - player.position.x,
+            ghost.position.y - player.position.y
+        ) < ghost.radius + player.radius) {
+            // Game over logic
+            if (!ghost.scared) {
+                lifeCount.lifeLost();
+                if (lifeCount.lifes === 0) {
+                    console.log('Game Over!');
+                    location.reload();
+                }
+                
+            }
+        }
+    });
     // Collision logic
     boundaries.forEach((boundary) => {
         if (
@@ -189,6 +245,9 @@ pellets.forEach((pellet, index) => {
     //player.velocity.y = 0;   
 }
 
+animate();
+
+
 let isPaused = false;
 
 function togglePause() {
@@ -228,6 +287,7 @@ function pause() {
     } else {
         pauseOverlay.style.display = 'flex';
     }
+
 }
 
 function unpause() {
@@ -240,8 +300,6 @@ function unpause() {
     // interval = setInterval(animate, 1000 / 60);
 }
 
-
-animate();
 
 
 addEventListener('keydown', ({ key }) => {
@@ -279,7 +337,7 @@ addEventListener('keyup', ({ key }) => {
         case 'a':
             keys.a.pressed = false;
             break;
-        case 's':3
+        case 's':
             keys.s.pressed = false;
             break;
         case 'd':
@@ -287,3 +345,4 @@ addEventListener('keyup', ({ key }) => {
             break;
     }
 })
+
