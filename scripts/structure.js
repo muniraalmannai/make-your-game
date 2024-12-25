@@ -1,5 +1,7 @@
-const gameArea = document.createElement('div');
-document.body.appendChild(gameArea);
+// const gameArea = document.createElement('div');
+// document.body.appendChild(gameArea);
+export const gameArea = document.getElementById('game-container');
+
 
 // gameArea.style.position = 'relative';
 gameArea.style.width = `${innerWidth}px`;

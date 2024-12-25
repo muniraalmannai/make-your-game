@@ -1,8 +1,12 @@
-import {Boundary,Player} from './structure.js'
+import {Boundary,Player, gameArea} from './structure.js'
 import {map} from './map.js'
-
+import { Pellet, createPellets } from './pellets.js';
+import { ScoreManager } from './scoring.js';
 
 const boundaries = [];
+const pellets = createPellets(map, Boundary);
+const scoreManager = new ScoreManager(gameArea);
+
 
 //defines pac-man attributes
 const player = new Player({
@@ -156,6 +160,17 @@ function animate() {
         }    
     });
      
+    // Pellet logic
+pellets.forEach((pellet, index) => {
+    if (Math.hypot(
+        pellet.position.x - player.position.x,
+        pellet.position.y - player.position.y
+    ) < player.radius + pellet.radius) {
+        pellets.splice(index, 1);
+        scoreManager.addPoints(10);
+        pellet.remove();
+    }
+});
 
     // Warping logic
     if (player.position.y >= Boundary.height * 9 && player.position.y <= Boundary.height * 10) {
