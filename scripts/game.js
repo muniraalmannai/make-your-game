@@ -123,9 +123,10 @@ function animate() {
             if (Math.hypot(ghost.position.x - player.position.x, ghost.position.y - player.position.y) < ghost.radius + player.radius) {
                 if (!ghost.scared) {
                     lifeCount.lifeLost();
-                    if (lifeCount.lifes === 0) {
-                        console.log('Game Over!');
-                        location.reload();
+                    if (lifeCount.lifes == 0) {
+                        isPaused = true;
+                        timeScale = 0; // Stop all movement
+                        Loss();
                     }
                 }
             }
