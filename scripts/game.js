@@ -3,6 +3,7 @@ import { map } from './map.js';
 import { createPellets } from './pellets.js';
 import { ScoreManager, LifeCount } from './scoring.js';
 import { Ghost } from './ghosts.js';
+import { Win,Loss } from './win-loss.js';
 
 const boundaries = [];
 const pellets = createPellets(map, Boundary);
@@ -146,6 +147,13 @@ function animate() {
                 pellet.remove();
             }
         });
+
+        if (scoreManager.score === 20){
+            isPaused = true;
+            timeScale = 0; // Stop all movement
+            Win();
+
+        } 
 
         // Warping logic
         if (player.position.y >= Boundary.height * 9 && player.position.y <= Boundary.height * 10) {
