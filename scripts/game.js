@@ -219,18 +219,22 @@ addEventListener('keydown', ({ key }) => {
     switch (key) {
         case 'w':
             keys.w.pressed = true;
+            player.angle = 90;
             lastKey = 'w';
             break;
         case 'a':
             keys.a.pressed = true;
+            player.angle = 360;
             lastKey = 'a';
             break;
         case 's':
             keys.s.pressed = true;
+            player.angle = 270;
             lastKey = 's';
             break;
         case 'd':
             keys.d.pressed = true;
+            player.angle = 180;
             lastKey = 'd';
             break;
         case 'p':

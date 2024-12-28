@@ -46,6 +46,7 @@ export class Player {
         this.element.style.borderRadius = '50%';
         this.element.style.left = `${this.position.x - this.radius + (innerWidth/3)}px`;
         this.element.style.top = `${this.position.y - this.radius + (innerHeight/10)}px`;
+        this.angle = 0
         
         // Create Pac-Man's mouth using a pseudo-element
         this.element.style.clipPath = 'polygon(0 0, 50% 50%, 0 100%, 100% 100%, 100% 0)';
@@ -74,13 +75,7 @@ export class Player {
         this.element.style.left = `${this.position.x - this.radius + (innerWidth/3)}px`;
         this.element.style.top = `${this.position.y - this.radius + (innerHeight/10)}px`;
         
-        // direction
-        let angle = 0;
-        if (this.velocity.x > 0) angle = 180;
-        else if (this.velocity.x < 0) angle = 360;
-        else if (this.velocity.y < 0) angle = 90;
-        else if (this.velocity.y > 0) angle = 270;
-        this.element.style.transform = `rotate(${angle}deg)`;
+        this.element.style.transform = `rotate(${this.angle}deg)`;
     }
 
     update() {
