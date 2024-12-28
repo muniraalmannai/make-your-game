@@ -212,7 +212,6 @@ function pause() {
     timeScale = 0; // Stop all movement
     let pauseOverlay = document.getElementById('pause-overlay');
 
-    //creates the pause page
     if (!pauseOverlay) {
         pauseOverlay = document.createElement('div');
         pauseOverlay.id = 'pause-overlay';
@@ -232,41 +231,64 @@ function pause() {
         pauseOverlay.style.zIndex = '1000';
         pauseOverlay.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.9)';
 
-        //creates 'game paused' text
         const pauseText = document.createElement('div');
         pauseText.textContent = 'Game Paused';
         pauseText.style.fontSize = '80px';
-        pauseText.style.fontWeight = 'bold';
+        pauseText.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
         pauseText.style.textShadow = '2px 2px 5px rgba(0, 0, 0, 0.7)';
         pauseText.style.marginBottom = '30px';
 
-        //creates button element and resets on click
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.gap = '20px';
+
+        const continueButton = document.createElement('button');
+        continueButton.textContent = 'Continue';
+        continueButton.style.padding = '15px 30px';
+        continueButton.style.backgroundColor = '#007BFF';
+        continueButton.style.color = 'white';
+        continueButton.style.border = 'none';
+        continueButton.style.borderRadius = '8px';
+        continueButton.style.fontSize = '24px';
+        continueButton.style.cursor = 'pointer';
+        continueButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+        continueButton.style.transition = 'background-color 0.3s, transform 0.2s';
+        continueButton.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
+        continueButton.onmouseover = () => continueButton.style.backgroundColor = '#0056b3';
+        continueButton.onmouseout = () => continueButton.style.backgroundColor = '#007BFF';
+        continueButton.onmousedown = () => continueButton.style.transform = 'scale(0.95)';
+        continueButton.onmouseup = () => continueButton.style.transform = 'scale(1)';
+        continueButton.onclick = unpause;
+
         const resetButton = document.createElement('button');
         resetButton.textContent = 'Reset Game';
         resetButton.style.padding = '15px 30px';
-        resetButton.style.fontSize = '24px';
-        resetButton.style.fontWeight = 'bold';
-        resetButton.style.color = '#fff';
         resetButton.style.backgroundColor = '#007BFF';
+        resetButton.style.color = 'white';
         resetButton.style.border = 'none';
         resetButton.style.borderRadius = '8px';
+        resetButton.style.fontSize = '24px';
         resetButton.style.cursor = 'pointer';
-        resetButton.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
         resetButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
         resetButton.style.transition = 'background-color 0.3s, transform 0.2s';
+        resetButton.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
         resetButton.onmouseover = () => resetButton.style.backgroundColor = '#0056b3';
         resetButton.onmouseout = () => resetButton.style.backgroundColor = '#007BFF';
         resetButton.onmousedown = () => resetButton.style.transform = 'scale(0.95)';
         resetButton.onmouseup = () => resetButton.style.transform = 'scale(1)';
         resetButton.onclick = resetGame;
 
+        buttonContainer.appendChild(continueButton);
+        buttonContainer.appendChild(resetButton);
+
         pauseOverlay.appendChild(pauseText);
-        pauseOverlay.appendChild(resetButton);
+        pauseOverlay.appendChild(buttonContainer);
         document.body.appendChild(pauseOverlay);
     } else {
         pauseOverlay.style.display = 'flex';
     }
 }
+
 function unpause() {
     isPaused = false;
     timeScale = 1;
@@ -277,9 +299,9 @@ function unpause() {
     }
 }
 
-//resets the game when triggered in pause
 function resetGame() {
-    location.reload();
+    // Add your reset logic here
+    location.reload(); // Reloads the page to reset the game
 }
 
 addEventListener('keydown', ({ key }) => {
