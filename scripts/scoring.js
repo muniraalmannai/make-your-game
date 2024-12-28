@@ -63,6 +63,7 @@ export class FPSCounter {
         this.fpsElement.style.width = '100%';
         this.fpsElement.style.paddingLeft = '180px'
         this.fpsElement.style.textAlign = 'center';
+        
         this.updateDisplay();
         gameArea.appendChild(this.fpsElement);
 
