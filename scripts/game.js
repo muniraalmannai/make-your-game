@@ -179,7 +179,7 @@ function animate() {
             }
         });
 
-        if (scoreManager.score === 2080){
+        if (scoreManager.score === 2070){
             isPaused = true;
             timeScale = 0; // Stop all movement
             Win();
