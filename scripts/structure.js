@@ -37,6 +37,7 @@ export class Player {
         this.velocity = velocity;
         this.radius = 15;
         this.element = document.createElement('div');
+        this.element.id = 'pac'
         
         // Base styles for Pac-Man
         this.element.style.position = 'absolute';
@@ -76,6 +77,11 @@ export class Player {
         this.element.style.top = `${this.position.y - this.radius + (innerHeight/10)}px`;
         
         this.element.style.transform = `rotate(${this.angle}deg)`;
+    }
+
+    erase(){
+        var elemento = document.getElementById(this.element.id);
+        elemento.remove()
     }
 
     update() {

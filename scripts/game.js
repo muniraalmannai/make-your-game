@@ -12,7 +12,7 @@ const lifeCount = new LifeCount(gameArea);
 const fpsCounter = new FPSCounter(gameArea);
 
 // Rest of the code remains exactly the same...
-const player = new Player({
+var player = new Player({
     position: {
         x: Boundary.width * 10 + Boundary.width / 2,
         y: Boundary.width * 3 + Boundary.width / 2
@@ -62,12 +62,41 @@ export function collision({ circle, rectangle }) {
     );
 }
 
-export const ghosts = [
+
+
+export var ghosts = [
     new Ghost({ position: { x: Boundary.width * 8 + Boundary.width / 2, y: Boundary.width * 9 + Boundary.width / 2 }, color: 'red', behavior: 'blinky' }),
     new Ghost({ position: { x: Boundary.width * 9 + Boundary.width / 2, y: Boundary.width * 9 + Boundary.width / 2 }, color: 'pink', behavior: 'pinky' }),
     new Ghost({ position: { x: Boundary.width * 11 + Boundary.width / 2, y: Boundary.width * 9 + Boundary.width / 2 }, color: 'cyan', behavior: 'inky' }),
     new Ghost({ position: { x: Boundary.width * 12 + Boundary.width / 2, y: Boundary.width * 9 + Boundary.width / 2 }, color: 'orange', behavior: 'clyde' })
 ];
+
+function recovery(){
+        
+    player.erase()
+
+    ghosts.forEach(ghost => {
+        ghost.remove()
+    })
+
+    ghosts = [
+        new Ghost({ position: { x: Boundary.width * 8 + Boundary.width / 2, y: Boundary.width * 9 + Boundary.width / 2 }, color: 'red', behavior: 'blinky' }),
+        new Ghost({ position: { x: Boundary.width * 9 + Boundary.width / 2, y: Boundary.width * 9 + Boundary.width / 2 }, color: 'pink', behavior: 'pinky' }),
+        new Ghost({ position: { x: Boundary.width * 11 + Boundary.width / 2, y: Boundary.width * 9 + Boundary.width / 2 }, color: 'cyan', behavior: 'inky' }),
+        new Ghost({ position: { x: Boundary.width * 12 + Boundary.width / 2, y: Boundary.width * 9 + Boundary.width / 2 }, color: 'orange', behavior: 'clyde' })
+    ];
+
+    player = new Player({
+        position: {
+            x: Boundary.width * 10 + Boundary.width / 2,
+            y: Boundary.width * 3 + Boundary.width / 2
+        },
+        velocity: {
+            x: 0,
+            y: 0
+        }
+    });
+}
 
 function animate() {
     requestAnimationFrame(animate);
@@ -123,6 +152,7 @@ function animate() {
             if (Math.hypot(ghost.position.x - player.position.x, ghost.position.y - player.position.y) < ghost.radius + player.radius) {
                 if (!ghost.scared) {
                     lifeCount.lifeLost();
+                    recovery();
                     if (lifeCount.lifes == 0) {
                         isPaused = true;
                         timeScale = 0; // Stop all movement
