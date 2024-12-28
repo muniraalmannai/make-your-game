@@ -236,6 +236,9 @@ addEventListener('keydown', ({ key }) => {
         case 'p':
             togglePause();
             break;
+        case 'r':
+            location.reload()
+            break;
     }
 });
 
@@ -253,6 +256,7 @@ addEventListener('keyup', ({ key }) => {
         case 'd':
             keys.d.pressed = false;
             break;
+        
     }
 });
 
