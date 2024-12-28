@@ -47,10 +47,48 @@ export class LifeCount {
     updateDisplay() {
         this.lifeElement.innerHTML = `lifes: ${this.lifes}`;
     }
-
-    getLife() {
-        return this.life;
-    }
+    
 }
 
+export class FPSCounter {
+    constructor(gameArea) {
+        this.fps = 0;
+        this.frameCount = 0;
+        this.lastTime = performance.now();
+        
+        this.fpsElement = document.createElement('div');
+        this.fpsElement.style.color = 'white';
+        this.fpsElement.style.position = 'absolute';
+        this.fpsElement.style.bottom = '10px';
+        this.fpsElement.style.width = '100%';
+        this.fpsElement.style.paddingLeft = '180px'
+        this.fpsElement.style.textAlign = 'center';
+        this.updateDisplay();
+        gameArea.appendChild(this.fpsElement);
 
+        this.startTracking();
+    }
+
+    startTracking() {
+        const calculateFPS = () => {
+            this.frameCount++;
+            const currentTime = performance.now();
+            const elapsed = currentTime - this.lastTime;
+
+            if (elapsed >= 1000) {  
+                this.fps = Math.round((this.frameCount * 1000) / elapsed);
+                this.frameCount = 0;
+                this.lastTime = currentTime;
+                this.updateDisplay();
+            }
+
+            requestAnimationFrame(calculateFPS);
+        };
+
+        calculateFPS();
+    }
+
+    updateDisplay() {
+        this.fpsElement.innerHTML = `FPS: ${this.fps}`;
+    }
+}

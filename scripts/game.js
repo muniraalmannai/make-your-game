@@ -1,7 +1,7 @@
 import { Boundary, Player, gameArea } from './structure.js';
 import { map } from './map.js';
 import { createPellets } from './pellets.js';
-import { ScoreManager, LifeCount } from './scoring.js';
+import { ScoreManager, LifeCount, FPSCounter } from './scoring.js';
 import { Ghost } from './ghosts.js';
 import { Win,Loss } from './win-loss.js';
 
@@ -9,8 +9,9 @@ const boundaries = [];
 const pellets = createPellets(map, Boundary);
 const scoreManager = new ScoreManager(gameArea);
 const lifeCount = new LifeCount(gameArea);
+const fpsCounter = new FPSCounter(gameArea);
 
-// Defines pac-man attributes
+// Rest of the code remains exactly the same...
 const player = new Player({
     position: {
         x: Boundary.width * 10 + Boundary.width / 2,
@@ -72,7 +73,6 @@ function animate() {
     requestAnimationFrame(animate);
 
     if (!isPaused) { 
-
         // Player movement logic
         if (keys.w.pressed && lastKey === 'w') {
             for (let i = 0; i < boundaries.length; i++) {
@@ -153,7 +153,6 @@ function animate() {
             isPaused = true;
             timeScale = 0; // Stop all movement
             Win();
-
         } 
 
         // Warping logic
