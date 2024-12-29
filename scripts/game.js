@@ -30,6 +30,7 @@ const keys = {
     d: { pressed: false }
 };
 
+let gameOver = false;
 let lastKey = '';
 let timeScale = 1;
 let isPaused = false;
@@ -157,6 +158,8 @@ function animate() {
                         isPaused = true;
                         timeScale = 0; // Stop all movement
                         Loss();
+                        timerDisplay.stop()
+                        gameOver = true
                     }
                 }
             }
@@ -183,6 +186,8 @@ function animate() {
             isPaused = true;
             timeScale = 0; // Stop all movement
             Win();
+            timerDisplay.stop()
+            gameOver = true;
         } 
 
         // Warping logic
@@ -217,11 +222,14 @@ function animate() {
 }
 
 function togglePause() {
-    if (isPaused) {
-        unpause();
-    } else {
-        pause();
+    if (!gameOver){
+        if (isPaused) {
+                unpause();
+            } else {
+                pause();
+            }
     }
+    
 }
 
 function pause() {
