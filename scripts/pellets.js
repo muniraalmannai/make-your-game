@@ -4,6 +4,7 @@ export class Pellet {
     constructor({ position }) {
         this.position = position;
         this.radius = 3;
+        this.id = id;
         
         this.element = document.createElement('div');
         this.element.style.position = 'absolute';
@@ -25,7 +26,7 @@ export class Pellet {
 export function createPellets(map, Boundary) {
     const pellets = [];
     const spawnX = Boundary.width * 10 + Boundary.width / 2;
-    const spawnY = Boundary.width * 9 + Boundary.width / 2;
+    const spawnY = Boundary.width * 3 + Boundary.width / 2;
 
     map.forEach((row, i) => {
         row.forEach((symbol, j) => {
@@ -36,12 +37,20 @@ export function createPellets(map, Boundary) {
                 // Skip pellet creation at spawn point
                 if (pelletX === spawnX && pelletY === spawnY) return;
                 
+                // IDs for warp pellets
+                let pelletId = null;
+                if (i === 9) {
+                    if (j === 0) pelletId = 'warpLeft';
+                    if (j === 20) pelletId = 'warpRight';
+                }
+                
                 pellets.push(
                     new Pellet({
                         position: {
                             x: pelletX,
                             y: pelletY
-                        }
+                        },
+                        id: pelletId
                     })
                 );
             }

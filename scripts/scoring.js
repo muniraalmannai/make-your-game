@@ -27,7 +27,7 @@ export class ScoreManager {
 
 export class LifeCount {
     constructor(gameArea) {
-        this.lifes = 3;
+        this.lives = 3;
         this.lifeElement = document.createElement('div');
         this.lifeElement.style.color = 'white';
         this.lifeElement.style.position = 'absolute';
@@ -40,12 +40,12 @@ export class LifeCount {
     }
 
     lifeLost() {
-        this.lifes -= 1;
+        this.lives -= 1;
         this.updateDisplay();
     }
 
     updateDisplay() {
-        this.lifeElement.innerHTML = `lifes: ${this.lifes}`;
+        this.lifeElement.innerHTML = `lives: ${this.lives}`;
     }
     
 }

@@ -153,7 +153,7 @@ function animate() {
                 if (!ghost.scared) {
                     lifeCount.lifeLost();
                     recovery();
-                    if (lifeCount.lifes == 0) {
+                    if (lifeCount.lives == 0) {
                         isPaused = true;
                         timeScale = 0; // Stop all movement
                         Loss();
@@ -162,7 +162,7 @@ function animate() {
             }
         });
 
-        //Collision logic
+        // Collision logic
         boundaries.forEach(boundary => {
             if (collision({ circle: player, rectangle: boundary })) {
                 player.velocity.x = 0;
@@ -187,11 +187,28 @@ function animate() {
 
         // Warping logic
         if (player.position.y >= Boundary.height * 9 && player.position.y <= Boundary.height * 10) {
+            let warped = false;
+            
             if (player.position.x > Boundary.width * 20) {
                 player.position.x = Boundary.width;
+                warped = true;
             }
             if (player.position.x < Boundary.width) {
                 player.position.x = Boundary.width * 20;
+                warped = true;
+            }
+            
+            if (warped) {
+                for (let i = pellets.length - 1; i >= 0; i--) {
+                    const pellet = pellets[i];
+                    if (pellet.position.y === Boundary.height * 9 + Boundary.height / 2) {
+                        if (pellet.position.x === Boundary.width / 2 || pellet.position.x === Boundary.width * 20 + Boundary.width / 2) {
+                            pellets.splice(i, 1);
+                            scoreManager.addPoints(10);
+                            pellet.remove();
+                        }
+                    }
+                }
             }
         }
 
