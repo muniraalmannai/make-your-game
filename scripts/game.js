@@ -1,7 +1,7 @@
 import { Boundary, Player, gameArea } from './structure.js';
 import { map } from './map.js';
 import { createPellets } from './pellets.js';
-import { ScoreManager, LifeCount, FPSCounter } from './scoring.js';
+import { ScoreManager, LifeCount, FPSCounter, Timer } from './scoring.js';
 import { Ghost } from './ghosts.js';
 import { Win,Loss } from './win-loss.js';
 
@@ -10,8 +10,8 @@ const pellets = createPellets(map, Boundary);
 const scoreManager = new ScoreManager(gameArea);
 const lifeCount = new LifeCount(gameArea);
 const fpsCounter = new FPSCounter(gameArea);
+const timerDisplay = new Timer(gameArea);
 
-// Rest of the code remains exactly the same...
 var player = new Player({
     position: {
         x: Boundary.width * 10 + Boundary.width / 2,
@@ -210,6 +210,7 @@ function togglePause() {
 function pause() {
     isPaused = true;
     timeScale = 0; // Stop all movement
+    timerDisplay.stop(); // Stops the timer
     let pauseOverlay = document.getElementById('pause-overlay');
 
     if (!pauseOverlay) {
@@ -291,7 +292,8 @@ function pause() {
 
 function unpause() {
     isPaused = false;
-    timeScale = 1;
+    timeScale = 1; 
+    timerDisplay.resume(); // Resumes the timer
     const pauseOverlay = document.getElementById('pause-overlay');
 
     if (pauseOverlay) {
