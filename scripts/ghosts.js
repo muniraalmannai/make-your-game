@@ -3,6 +3,9 @@ import {collision,ghosts} from './game.js';
 
 export class Ghost {
     constructor({ position, color, behavior }) {
+        this.isInBox = true;
+        this.releaseDelay = this.getReleaseDelay(behavior);
+        this.releaseTimer = 0;
         this.position = position;
         this.velocity = {
             x: 0,
@@ -96,7 +99,30 @@ export class Ghost {
         }
     }
 
+    // Delay logic
+    getReleaseDelay(behavior) {
+        switch(behavior) {
+            case 'blinky': return 0;
+            case 'pinky': return 1000;
+            case 'inky': return 2000;
+            case 'clyde': return 3000;
+            default: return 0;
+        }
+    }
+
     update(player, boundaries) {
+        // Delay implementation 
+        if (this.isInBox) {
+            this.releaseTimer += 16.67; // Assuming 60fps
+            if (this.releaseTimer >= this.releaseDelay) {
+                this.isInBox = false;
+            } else {
+                this.velocity.x = 0;
+                this.velocity.y = 0;
+                return;
+            }
+        }
+
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
         
