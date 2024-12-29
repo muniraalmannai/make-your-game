@@ -1,7 +1,7 @@
 import { gameArea } from './structure.js';
 
 export class Pellet {
-    constructor({ position }) {
+    constructor({ position, id }) {
         this.position = position;
         this.radius = 3;
         this.id = id;
