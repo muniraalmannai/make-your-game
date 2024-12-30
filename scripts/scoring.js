@@ -1,15 +1,15 @@
 export class ScoreManager {
-    constructor(gameArea) {
+    constructor(scoringBare) {
         this.score = 0;
         this.scoreElement = document.createElement('div');
-        this.scoreElement.style.fontSize = '24px';
+        this.scoreElement.style.fontSize = '20px';
         this.scoreElement.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
         this.scoreElement.style.color = 'white';
         this.scoreElement.style.position = 'absolute';
         this.scoreElement.style.top = '10px';
         this.scoreElement.style.left = '10px';
         this.updateDisplay();
-        gameArea.appendChild(this.scoreElement);
+        scoringBare.appendChild(this.scoreElement);
     }
 
     addPoints(points) {
@@ -27,18 +27,18 @@ export class ScoreManager {
 }
 
 export class LifeCount {
-    constructor(gameArea) {
+    constructor(scoringBare) {
         this.lives = 3;
         this.lifeElement = document.createElement('div');
-        this.lifeElement.style.fontSize = '24px';
+        this.lifeElement.style.fontSize = '20px';
         this.lifeElement.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
         this.lifeElement.style.color = 'white';
         this.lifeElement.style.position = 'absolute';
         this.lifeElement.style.top = '10px';
-        this.lifeElement.style.left = `${((screen.width/2)/2)}px`;
+        this.lifeElement.style.marginLeft = '450px'
 
         this.updateDisplay();
-        gameArea.appendChild(this.lifeElement);
+        scoringBare.appendChild(this.lifeElement);
     }
 
     lifeLost() {
@@ -52,21 +52,21 @@ export class LifeCount {
 }
 
 export class FPSCounter {
-    constructor(gameArea) {
+    constructor(scoringBare) {
         this.fps = 0;
         this.frameCount = 0;
         this.lastTime = performance.now();
 
         this.fpsElement = document.createElement('div');
-        this.fpsElement.style.fontSize = '24px';
+        this.fpsElement.style.fontSize = '20px';
         this.fpsElement.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
         this.fpsElement.style.color = 'white';
         this.fpsElement.style.position = 'absolute';
         this.fpsElement.style.top = '10px';
-        this.fpsElement.style.right = `${((screen.width/2)/2)}px`;
+        this.fpsElement.style.marginLeft = '250px'
 
         this.updateDisplay();
-        gameArea.appendChild(this.fpsElement);
+        scoringBare.appendChild(this.fpsElement);
 
         this.startTracking();
     }
@@ -96,18 +96,18 @@ export class FPSCounter {
 }
 
 export class Timer {
-    constructor(gameArea) {
+    constructor(scoringBare) {
         this.time = 0;
         this.interval = null;
-        this.gameArea = gameArea;
+        this.scoringBare = scoringBare;
         this.timerDisplay = document.createElement('div');
-        this.timerDisplay.style.fontSize = '24px';
+        this.timerDisplay.style.fontSize = '20px';
         this.timerDisplay.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
         this.timerDisplay.style.color = 'white';
         this.timerDisplay.style.position = 'absolute';
         this.timerDisplay.style.top = '10px';
-        this.timerDisplay.style.right = '10px';
-        this.gameArea.appendChild(this.timerDisplay);
+        this.timerDisplay.style.marginLeft = '650px'
+        this.scoringBare.appendChild(this.timerDisplay);
         this.start();
     }
 

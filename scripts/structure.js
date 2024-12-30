@@ -1,12 +1,29 @@
 // const gameArea = document.createElement('div');
 // document.body.appendChild(gameArea);
-export const gameArea = document.getElementById('game-container');
+document.body.style.transform = 'scale(1))';
+export const container = document.getElementById('game-container');
 
 // gameArea.style.position = 'relative';
-gameArea.style.width = `${innerWidth}px`;
-gameArea.style.height = `${innerHeight}px`;
-gameArea.style.overflow = 'hidden';
-gameArea.style.border = '1px solid black';
+container.style.width = `${innerWidth}px`;
+container.style.height = `${innerHeight}px`;
+container.style.overflow = 'hidden';
+container.style.border = '1px solid black';
+
+export const gameArea = document.getElementById('game');
+gameArea.style.width = '840px';
+gameArea.style.height = '880px';
+gameArea.style.position = 'absolute';
+gameArea.style.left = '50%';
+gameArea.style.top = '50%';
+gameArea.style.transform = 'translate(-50%, -50%)';
+
+export const scoringBare = document.getElementById('scoring');
+scoringBare.style.width = '840px';
+scoringBare.style.height = '45px';
+scoringBare.style.position = 'absolute';
+scoringBare.style.left = '50%';
+scoringBare.style.top = '50%';
+scoringBare.style.transform = 'translate(-50%, -960%)';
 
 //creates the map boundaries
 export class Boundary { 
@@ -24,8 +41,8 @@ export class Boundary {
         this.element.style.width = `${this.width}px`;
         this.element.style.height = `${this.height}px`;
         this.element.style.backgroundColor = 'darkblue';
-        this.element.style.left = `${this.position.x + (innerWidth/3) }px`;
-        this.element.style.top = `${this.position.y + (innerHeight/10)}px`;
+        this.element.style.left = `${this.position.x}px`;
+        this.element.style.top = `${this.position.y}px`;
 
         gameArea.appendChild(this.element);
     }
@@ -45,8 +62,8 @@ export class Player {
         this.element.style.height = `${this.radius * 2}px`;
         this.element.style.backgroundColor = '#FFFF00'; // Pac-Man yellow
         this.element.style.borderRadius = '50%';
-        this.element.style.left = `${this.position.x - this.radius + (innerWidth/3)}px`;
-        this.element.style.top = `${this.position.y - this.radius + (innerHeight/10)}px`;
+        this.element.style.left = `${this.position.x - this.radius}px`;
+        this.element.style.top = `${this.position.y - this.radius}px`;
         this.angle = 0
         
         // Create Pac-Man's mouth using a pseudo-element
@@ -73,8 +90,8 @@ export class Player {
     }
 
     draw() {
-        this.element.style.left = `${this.position.x - this.radius + (innerWidth/3)}px`;
-        this.element.style.top = `${this.position.y - this.radius + (innerHeight/10)}px`;
+        this.element.style.left = `${this.position.x - this.radius}px`;
+        this.element.style.top = `${this.position.y - this.radius}px`;
         
         this.element.style.transform = `rotate(${this.angle}deg)`;
     }

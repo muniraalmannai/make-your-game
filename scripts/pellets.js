@@ -12,8 +12,8 @@ export class Pellet {
         this.element.style.height = `${this.radius * 2}px`;
         this.element.style.backgroundColor = 'white';
         this.element.style.borderRadius = '50%';
-        this.element.style.left = `${this.position.x - this.radius + (innerWidth/3)}px`;
-        this.element.style.top = `${this.position.y - this.radius + (innerHeight/10)}px`;
+        this.element.style.left = `${this.position.x - this.radius }px`;
+        this.element.style.top = `${this.position.y - this.radius }px`;
         
         gameArea.appendChild(this.element);
     }

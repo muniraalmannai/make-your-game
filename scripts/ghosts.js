@@ -31,8 +31,8 @@ export class Ghost {
         this.element.style.backgroundColor = color;
         this.element.style.borderRadius = '15px 15px 0 0'; // Rounded top, flat bottom
         this.element.style.position = 'absolute';
-        this.element.style.left = `${this.position.x + (innerWidth / 3)}px`;
-        this.element.style.top = `${this.position.y + (innerHeight / 10)}px`;
+        this.element.style.left = `${this.position.x }px`;
+        this.element.style.top = `${this.position.y}px`;
         this.element.style.transition = 'transform 0.1s';
         this.element.style.display = 'flex';
         this.element.style.alignItems = 'center';
@@ -126,8 +126,8 @@ export class Ghost {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
         
-        this.element.style.left = `${this.position.x - 15 + (innerWidth/3)}px`;
-        this.element.style.top = `${this.position.y - 15 + (innerHeight/10)}px`;
+        this.element.style.left = `${this.position.x}px`;
+        this.element.style.top = `${this.position.y}px`;
         
         if (this.behavior === 'blinky' && this.position.x >= Boundary.width * 13) {
             this.velocity.x = 0;

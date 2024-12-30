@@ -1,4 +1,4 @@
-import { Boundary, Player, gameArea } from './structure.js';
+import { Boundary, Player, gameArea, scoringBare } from './structure.js';
 import { map } from './map.js';
 import { createPellets } from './pellets.js';
 import { ScoreManager, LifeCount, FPSCounter, Timer } from './scoring.js';
@@ -7,10 +7,10 @@ import { Win,Loss } from './win-loss.js';
 
 const boundaries = [];
 const pellets = createPellets(map, Boundary);
-const scoreManager = new ScoreManager(gameArea);
-const lifeCount = new LifeCount(gameArea);
-const fpsCounter = new FPSCounter(gameArea);
-const timerDisplay = new Timer(gameArea);
+const scoreManager = new ScoreManager(scoringBare);
+const lifeCount = new LifeCount(scoringBare);
+const fpsCounter = new FPSCounter(scoringBare);
+const timerDisplay = new Timer(scoringBare);
 
 var player = new Player({
     position: {
@@ -182,7 +182,7 @@ function animate() {
             }
         });
 
-        if (scoreManager.score === 2070){
+        if (scoreManager.score === 2060){
             isPaused = true;
             timeScale = 0; // Stop all movement
             Win();
