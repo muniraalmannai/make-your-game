@@ -19,11 +19,11 @@ gameArea.style.transform = 'translate(-50%, -50%)';
 
 export const scoringBare = document.getElementById('scoring');
 scoringBare.style.width = '840px';
-scoringBare.style.height = '45px';
+scoringBare.style.height = '60px';
 scoringBare.style.position = 'absolute';
 scoringBare.style.left = '50%';
 scoringBare.style.top = '50%';
-scoringBare.style.transform = 'translate(-50%, -960%)';
+scoringBare.style.transform = 'translate(-50%, -760%)';
 
 //creates the map boundaries
 export class Boundary { 
