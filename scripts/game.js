@@ -31,7 +31,7 @@ const keys = {
 };
 
 let gameOver = false;
-let lastKey = '';
+export var lastKey = '';
 let timeScale = 1;
 let isPaused = false;
 
@@ -153,6 +153,7 @@ function animate() {
             if (Math.hypot(ghost.position.x - player.position.x, ghost.position.y - player.position.y) < ghost.radius + player.radius) {
                 if (!ghost.scared) {
                     lifeCount.lifeLost();
+                    lastKey = 'a';
                     recovery();
                     if (lifeCount.lives == 0) {
                         isPaused = true;
@@ -335,22 +336,18 @@ addEventListener('keydown', ({ key }) => {
     switch (key) {
         case 'w':
             keys.w.pressed = true;
-            player.angle = 90;
             lastKey = 'w';
             break;
         case 'a':
             keys.a.pressed = true;
-            player.angle = 360;
             lastKey = 'a';
             break;
         case 's':
             keys.s.pressed = true;
-            player.angle = 270;
             lastKey = 's';
             break;
         case 'd':
             keys.d.pressed = true;
-            player.angle = 180;
             lastKey = 'd';
             break;
         case 'p':
