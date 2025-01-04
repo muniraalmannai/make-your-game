@@ -152,17 +152,26 @@ export class Ghost {
 
     // Clyde is shy when close to Pac-Man
     clydeBehavior(player, boundaries) {
-        const distance = Math.hypot(
-            player.position.x - this.position.x,
-            player.position.y - this.position.y
-        );
-        // If Clyde is within 8 tiles of Pac-Man, scatter to corner
-    const target = distance <= Boundary.width * 8 
-        ? this.scatterTarget 
-        : { x: player.position.x, y: player.position.y };
-
-    this.moveTowardsTarget(target, boundaries);
-}
+        const target = { x: player.position.x, y: player.position.y };
+        const offset = 4 * Boundary.width;
+    
+        // Always target Pac-Man's
+        switch (player.lastDirection) {
+            case 'w': 
+            target.y -= offset;
+            target.x -= offset;
+            case 's': target.y += offset; break;
+            case 'a': target.x -= offset; break;
+            case 'd': target.x += offset; break;
+            default: break; 
+        }
+    
+        this.moveTowardsTarget(target, boundaries);
+    }
+    
+    scatter(boundaries) {
+        this.moveTowardsTarget(this.scatterTarget, boundaries);
+    }
     getScatterTarget() {
         
         switch(this.behavior) {
