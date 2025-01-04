@@ -146,6 +146,77 @@ function animate() {
             }
         }
 
+        // Ghost collision prevention
+        for (let i = 0; i < ghosts.length; i++) {
+            for (let j = i + 1; j < ghosts.length; j++) {
+                const ghost1 = ghosts[i];
+                const ghost2 = ghosts[j];
+                
+                // Calculate distance between ghosts
+                const dx = ghost2.position.x - ghost1.position.x;
+                const dy = ghost2.position.y - ghost1.position.y;
+                const distance = Math.hypot(dx, dy);
+                
+                // If ghosts are too close (less than their combined radii plus a small buffer)
+                const minDistance = ghost1.radius + ghost2.radius + 2;
+                if (distance < minDistance) {
+                    // Calculate normalized direction vector
+                    const nx = dx / distance;
+                    const ny = dy / distance;
+                    
+                    // Calculate proposed new positions
+                    const separationDistance = (minDistance - distance) / 2;
+                    const ghost1NewPos = {
+                        x: ghost1.position.x - nx * separationDistance,
+                        y: ghost1.position.y - ny * separationDistance
+                    };
+                    const ghost2NewPos = {
+                        x: ghost2.position.x + nx * separationDistance,
+                        y: ghost2.position.y + ny * separationDistance
+                    };
+
+                    // Check if new positions would cause boundary collisions
+                    let ghost1Blocked = false;
+                    let ghost2Blocked = false;
+                    
+                    for (const boundary of boundaries) {
+                        if (collision({
+                            circle: { ...ghost1, position: ghost1NewPos, radius: ghost1.radius },
+                            rectangle: boundary
+                        })) {
+                            ghost1Blocked = true;
+                        }
+                        if (collision({
+                            circle: { ...ghost2, position: ghost2NewPos, radius: ghost2.radius },
+                            rectangle: boundary
+                        })) {
+                            ghost2Blocked = true;
+                        }
+                    }
+
+                    // Only move ghosts if they won't hit boundaries
+                    if (!ghost1Blocked) {
+                        ghost1.position.x = ghost1NewPos.x;
+                        ghost1.position.y = ghost1NewPos.y;
+                    }
+                    if (!ghost2Blocked) {
+                        ghost2.position.x = ghost2NewPos.x;
+                        ghost2.position.y = ghost2NewPos.y;
+                    }
+
+                    // If both ghosts are blocked, give them a small random nudge in a safe direction
+                    if (ghost1Blocked && ghost2Blocked) {
+                        const angle = Math.random() * Math.PI * 2;
+                        const pushDistance = 1;
+                        ghost1.velocity.x = Math.cos(angle) * pushDistance;
+                        ghost1.velocity.y = Math.sin(angle) * pushDistance;
+                        ghost2.velocity.x = -Math.cos(angle) * pushDistance;
+                        ghost2.velocity.y = -Math.sin(angle) * pushDistance;
+                    }
+                }
+            }
+        }
+
         ghosts.forEach(ghost => {
             ghost.update(player, boundaries);
 

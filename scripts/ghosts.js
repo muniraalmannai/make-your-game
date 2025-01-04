@@ -3,9 +3,6 @@ import {collision,ghosts} from './game.js';
 
 export class Ghost {
     constructor({ position, color, behavior }) {
-        this.isInBox = true;
-        this.releaseDelay = this.getReleaseDelay(behavior);
-        this.releaseTimer = 0;
         this.position = position;
         this.velocity = {
             x: 0,
@@ -19,10 +16,6 @@ export class Ghost {
         this.scared = false;
         this.scatterMode = false;
         this.scatterTarget = this.getScatterTarget();
-        this.scatterTimer = 0;
-        this.scatterDuration = 100; // 7 seconds scatter
-        this.chaseDuration = 200000;  // 20 seconds chase
-        this.mode = 'scatter';
     
         // Create ghost element
         this.element = document.createElement('div');
@@ -38,7 +31,6 @@ export class Ghost {
         this.element.style.alignItems = 'center';
         this.element.style.justifyContent = 'center';
         this.element.style.overflow = 'hidden';
-
         // Create eyes
         const eyeLeft = document.createElement('div');
         eyeLeft.style.width = '8px';
@@ -83,63 +75,15 @@ export class Ghost {
     
         // Add ghost to game area
         gameArea.appendChild(this.element);
-        
-        switch(this.behavior) {
-            case 'blinky': // Red
-                this.velocity.x = this.speed;
-                break;
-            case 'pinky': // Pink
-                this.velocity.y = -this.speed;
-                break;
-            case 'inky': // Blue
-                this.velocity.y = -this.speed;
-                break;
-            case 'clyde': // Orange
-                this.velocity.x = -this.speed;
-                break;
-        }
     }
-
-    getReleaseDelay(behavior) {
-        switch(behavior) {
-            case 'blinky': return 0;
-            case 'pinky': return 1000;
-            case 'inky': return 2000;
-            case 'clyde': return 3000;
-            default: return 0;
-        }
-    }
-
     update(player, boundaries) {
-        // Delay implementation 
-        if (this.isInBox) {
-            this.releaseTimer += 16.67; // Assuming 60fps
-            if (this.releaseTimer >= this.releaseDelay) {
-                this.isInBox = false;
-            } else {
-                this.velocity.x = 0;
-                this.velocity.y = 0;
-                return;
-            }
-        }
-
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
         
-        this.element.style.left = `${this.position.x - 12}px`;
-        this.element.style.top = `${this.position.y - 12}px`;
-
-        this.scatterTimer += 16.67; // for 60fps
-    
-        if (this.mode === 'scatter' && this.scatterTimer >= this.scatterDuration) {
-            this.mode = 'chase';
-            this.scatterTimer = 0;
-        } else if (this.mode === 'chase' && this.scatterTimer >= this.chaseDuration) {
-            this.mode = 'scatter';
-            this.scatterTimer = 0;
-        }
+        this.element.style.left = `${this.position.x -12}px`;
+        this.element.style.top = `${this.position.y-12}px`;
         
-        if (this.mode === 'scatter') {
+        if (this.scatterMode) {
             this.scatter(boundaries);
         } else {
             switch(this.behavior) {
@@ -150,86 +94,77 @@ export class Ghost {
                     this.pinkyBehavior(player, boundaries);
                     break;
                 case 'inky':
-                    this.inkyBehavior(player, boundaries);
+                    this.inkyBehavior(player, boundaries, ghosts[0]); 
                     break;
                 case 'clyde':
                     this.clydeBehavior(player, boundaries);
                     break;
             }
         }
-
-        // Ghost collision avoidance
-        ghosts.forEach(ghost => {
-            if (ghost !== this) {
-                const distance = Math.hypot(
-                    ghost.position.x - this.position.x,
-                    ghost.position.y - this.position.y
-                );
-                if (distance < this.radius * 2) {
-                    this.velocity.x += (this.position.x - ghost.position.x) * 0.1;
-                    this.velocity.y += (this.position.y - ghost.position.y) * 0.1;
-                }
-            }
-        });
     }
-
-    getPinkyStyleTarget(player) {
+    blinkyBehavior(player, boundaries) {
+        const target = { x: player.position.x, y: player.position.y };
+        this.moveTowardsTarget(target, boundaries);
+    }
+    
+    // Pinky targets 4 tiles
+    pinkyBehavior(player, boundaries) {
         const target = { x: player.position.x, y: player.position.y };
         const offset = 4 * Boundary.width;
     
+        // Always target Pac-Man's
         switch (player.lastDirection) {
-            case 'w':
-                target.y -= offset;
-                target.x -= offset;
-                break;
-            case 's':
-                target.y += offset;
-                break;
-            case 'a':
-                target.x -= offset;
-                break;
-            case 'd':
-                target.x += offset;
-                break;
-            default:
-                break;
+            case 'w': 
+            target.y -= offset;
+            target.x -= offset;
+            case 's': target.y += offset; break;
+            case 'a': target.x -= offset; break;
+            case 'd': target.x += offset; break;
+            default: break; 
         }
-        return target;
+    
+        this.moveTowardsTarget(target, boundaries);
     }
-
-    blinkyBehavior(player, boundaries) {
-        if (!player || !player.position) {
-            console.error('Invalid player object');
-            return;
+    
+    // Inky targets using Blinky and Pac-Man's positions
+    inkyBehavior(player, boundaries, blinky) {
+        const offset = 2 * Boundary.width;
+        const pacmanTarget = { x: player.position.x, y: player.position.y };
+    
+        switch (player.lastDirection) {
+            case 'w': pacmanTarget.y -= offset; break;
+            case 's': pacmanTarget.y += offset; break;
+            case 'a': pacmanTarget.x -= offset; break;
+            case 'd': pacmanTarget.x += offset; break;
+            default: break;
         }
-        const target = this.getPinkyStyleTarget(player);
+    
+        const vectorX = pacmanTarget.x - blinky.position.x;
+        const vectorY = pacmanTarget.y - blinky.position.y;
+    
+        const target = {
+            x: blinky.position.x + vectorX * 2,
+            y: blinky.position.y + vectorY * 2,
+        };
+    
         this.moveTowardsTarget(target, boundaries);
     }
 
-    pinkyBehavior(player, boundaries) {
-        const target = this.getPinkyStyleTarget(player);
-        this.moveTowardsTarget(target, boundaries);
-    }
-
-    inkyBehavior(player, boundaries) {
-        if (!player || !player.position) {
-            console.error('Invalid player object');
-            return;
-        }
-        const target = this.getPinkyStyleTarget(player);
-        this.moveTowardsTarget(target, boundaries);
-    }
-
+    // Clyde is shy when close to Pac-Man
     clydeBehavior(player, boundaries) {
-        const target = this.getPinkyStyleTarget(player);
-        this.moveTowardsTarget(target, boundaries);
-    }
+        const distance = Math.hypot(
+            player.position.x - this.position.x,
+            player.position.y - this.position.y
+        );
+        // If Clyde is within 8 tiles of Pac-Man, scatter to corner
+    const target = distance <= Boundary.width * 8 
+        ? this.scatterTarget 
+        : { x: player.position.x, y: player.position.y };
 
-    scatter(boundaries) {
-        this.moveTowardsTarget(this.scatterTarget, boundaries);
-    }
-
+    this.moveTowardsTarget(target, boundaries);
+}
     getScatterTarget() {
+        
         switch(this.behavior) {
             case 'blinky':
                 return { x: Boundary.width * 20, y: 0 }; 
@@ -243,41 +178,28 @@ export class Ghost {
                 return { x: 0, y: 0 };
         }
     }
-
     moveTowardsTarget(target, boundaries) {
         const possibleMoves = this.getPossibleMoves(boundaries);
-
+    
         if (possibleMoves.length === 0) {
-            console.warn('No possible moves available');
             this.velocity.x = 0;
             this.velocity.y = 0;
             return;
         }
-        
-        const atIntersection = possibleMoves.length > 1;
-        
-        if (atIntersection || possibleMoves.length === 0) {
-            const bestMove = possibleMoves.reduce((best, move) => {
-                const newPos = {
-                    x: this.position.x + move.x * this.speed,
-                    y: this.position.y + move.y * this.speed,
-                };
-                const distanceSquared =
-                    (target.x - newPos.x) ** 2 + (target.y - newPos.y) ** 2;
-                const randomFactor = Math.random() * 0.01; // Small randomness
     
-                return (distanceSquared + randomFactor) < best.distanceSquared
-                    ? { move, distanceSquared }
-                    : best;
-            }, { move: null, distanceSquared: Infinity });
-            
-            if (bestMove.move) {
-                this.velocity.x = bestMove.move.x * this.speed;
-                this.velocity.y = bestMove.move.y * this.speed;
-            }
-        }
+        const bestMove = possibleMoves.reduce((best, move) => {
+            const newPos = {
+                x: this.position.x + move.x * this.speed,
+                y: this.position.y + move.y * this.speed,
+            };
+            const distance = Math.hypot(target.x - newPos.x, target.y - newPos.y);
+            return distance < best.distance ? { move, distance } : best;
+        }, { move: null, distance: Infinity });
+    
+        this.velocity.x = bestMove.move.x * this.speed;
+        this.velocity.y = bestMove.move.y * this.speed;
     }
-
+    
     getPossibleMoves(boundaries) {
         const moves = [
             { x: 0, y: -1 },
@@ -301,12 +223,20 @@ export class Ghost {
             )
         );
     }
-
     setScared(isScared) {
         this.scared = isScared;
         this.element.style.backgroundColor = isScared ? 'blue' : this.color;
     }
-
+    getBestMoveFromAngle(possibleMoves, targetAngle) {
+        return possibleMoves.reduce((best, move) => {
+            const moveAngle = Math.atan2(move.y, move.x);
+            const angleDiff = Math.abs(targetAngle - moveAngle);
+            if (!best || angleDiff < best.angleDiff) {
+                return { ...move, angleDiff };
+            }
+            return best;
+        }, null);
+    }
     remove() {
         this.element.remove();
     }
