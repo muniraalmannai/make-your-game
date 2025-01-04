@@ -8,7 +8,7 @@ export class Ghost {
             x: 0,
             y: 0
         };
-        this.radius = 15;
+        this.radius = 16;
         this.color = color;
         this.behavior = behavior;
         this.speed = 2;
@@ -167,6 +167,8 @@ export class Ghost {
         }
     
         this.moveTowardsTarget(target, boundaries);
+
+
     }
     
     scatter(boundaries) {

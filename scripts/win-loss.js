@@ -95,7 +95,7 @@ export function Loss() {
     losing.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.9)';
 
     const lossText = document.createElement('div');
-    lossText.textContent = 'Game Over!';
+    lossText.textContent = ' Game Over!';
     lossText.style.fontSize = '80px';
     lossText.style.textShadow = '2px 2px 5px rgba(0, 0, 0, 0.7)';
     lossText.style.marginBottom = '30px';

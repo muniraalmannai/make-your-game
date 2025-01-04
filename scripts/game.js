@@ -1,3 +1,5 @@
+// hi im a commit weird isn't it>
+
 import { Boundary, Player, gameArea, scoringBare } from './structure.js';
 import { map } from './map.js';
 import { createPellets } from './pellets.js';
