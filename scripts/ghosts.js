@@ -2,13 +2,14 @@ import {Boundary,gameArea} from './structure.js'
 import {collision,ghosts} from './game.js';
 
 export class Ghost {
-    constructor({ position, color, behavior }) {
+    constructor({ position, color, behavior, id}) {
         this.position = position;
         this.velocity = {
             x: 0,
             y: 0
         };
-        this.radius = 16;
+        this.id = id;
+        this.radius = 15.75;
         this.color = color;
         this.behavior = behavior;
         this.speed = 2;
