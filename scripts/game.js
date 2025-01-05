@@ -5,7 +5,7 @@ import { map } from './map.js';
 import { createPellets } from './pellets.js';
 import { ScoreManager, LifeCount, FPSCounter, Timer } from './scoring.js';
 import { Ghost } from './ghosts.js';
-import { Win,Loss } from './win-loss.js';
+import { Win,Loss } from './winLoss.js';
 
 const boundaries = [];
 const pellets = createPellets(map, Boundary);
