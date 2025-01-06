@@ -261,10 +261,6 @@ export class Ghost {
         )
     );
   }
-  setScared(isScared) {
-    this.scared = isScared;
-    this.element.style.backgroundColor = isScared ? "blue" : this.color;
-  }
   getBestMoveFromAngle(possibleMoves, targetAngle) {
     return possibleMoves.reduce((best, move) => {
       const moveAngle = Math.atan2(move.y, move.x);

@@ -1,4 +1,5 @@
 import { gameArea } from "./structure.js";
+import { lastKey } from "./game.js";
 
 export class Player {
   constructor({ position, velocity }) {

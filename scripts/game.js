@@ -135,13 +135,29 @@ export var ghosts = [
 ];
 
 function GhostResolve(ghost_id) {
-  ghosts.forEach((ghost) => {
-    if (ghost.id == ghost_id) {
-      ghosts[ghost_id - 1] = new Ghost(ghostPositions[ghost_id]);
-      ghost.remove();
-    }
+  // Find the ghost that needs to be reset
+  const ghostIndex = ghosts.findIndex(ghost => ghost.id === ghost_id);
+  if (ghostIndex === -1) return;
+
+  // Remove the old ghost
+  ghosts[ghostIndex].remove();
+
+  // Create a new ghost with initial position and properties
+  const newGhost = new Ghost({
+    position: {
+      x: ghostPositions[ghost_id].position.x,
+      y: ghostPositions[ghost_id].position.y
+    },
+    color: ghostPositions[ghost_id].color,
+    behavior: ghostPositions[ghost_id].behavior,
+    id: ghost_id
   });
+
+  // Replace the old ghost with the new one
+  ghosts[ghostIndex] = newGhost;
 }
+
+
 
 function recovery() {
   player.erase();
@@ -268,6 +284,7 @@ function animate() {
       }
     }
 
+
     // Ghost collision prevention
     for (let i = 0; i < ghosts.length; i++) {
       for (let j = i + 1; j < ghosts.length; j++) {
@@ -355,27 +372,28 @@ function animate() {
       ghost.update(player, boundaries);
 
       if (ghost.velocity.x == 0 && ghost.velocity.y == 0) {
+        console.log(ghost.id)
         GhostResolve(ghost.id);
-      }
-
-      // Check for ghost collision with player
-      if (
-        Math.hypot(
-          ghost.position.x - player.position.x,
-          ghost.position.y - player.position.y
-        ) <
-        ghost.radius + player.radius
-      ) {
-        if (!ghost.scared) {
-          lifeCount.lifeLost();
-          lastKey = "a";
-          recovery();
-          if (lifeCount.lives == 0) {
-            isPaused = true;
-            timeScale = 0; // Stop all movement
-            Loss();
-            timerDisplay.stop();
-            gameOver = true;
+      }else{
+          // Check for ghost collision with player
+        if (
+          Math.hypot(
+            ghost.position.x - player.position.x,
+            ghost.position.y - player.position.y
+          ) <
+          ghost.radius + player.radius
+        ) {
+          if (!ghost.scared) {
+            lifeCount.lifeLost();
+            lastKey = "a";
+            recovery();
+            if (lifeCount.lives == 0) {
+              isPaused = true;
+              timeScale = 0; // Stop all movement
+              Loss();
+              timerDisplay.stop();
+              gameOver = true;
+            }
           }
         }
       }
@@ -565,7 +583,6 @@ function unpause() {
 }
 
 function resetGame() {
-  // Add your reset logic here
   location.reload(); // Reloads the page to reset the game
 }
 
