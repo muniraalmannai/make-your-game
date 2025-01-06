@@ -2,6 +2,7 @@ import { gameArea } from "./structure.js";
 import { Boundary } from "./boundary.js";
 import { ghosts } from "./game.js";
 import { collision } from "./collision.js";
+import { CONFIG } from "./config.js";
 
 export class Ghost {
   constructor({ position, color, behavior, id }) {
@@ -11,10 +12,10 @@ export class Ghost {
       y: 0,
     };
     this.id = id;
-    this.radius = 15.75;
+    this.radius = CONFIG.Ghost.radius;
+    this.speed = CONFIG.Ghost.speed;
     this.color = color;
     this.behavior = behavior;
-    this.speed = 2;
     this.prevCollisions = [];
     this.scared = false;
     this.scatterMode = false;

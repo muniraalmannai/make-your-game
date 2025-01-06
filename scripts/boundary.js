@@ -1,13 +1,14 @@
 import { gameArea } from "./structure.js";
+import { CONFIG } from "./config.js";
 
 export class Boundary {
-  static width = 40;
-  static height = 40;
+  static width = CONFIG.Boundary.width;
+  static height = CONFIG.Boundary.height;
 
   constructor({ position }) {
     this.position = position;
-    this.width = Boundary.width;
-    this.height = Boundary.height;
+    this.width = CONFIG.Boundary.width;
+    this.height = CONFIG.Boundary.height;
 
     this.element = document.createElement("div");
     this.element.style.position = "absolute";

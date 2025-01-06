@@ -1,4 +1,33 @@
+/* General body styles */
 body {
-    margin: 0;
-    background-color: black;
+  margin: 0;
+  background-color: black;
+}
+
+/* Styles for the game container */
+#game-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  border: 1px solid black;
+}
+
+/* Styles for the game area */
+#game {
+  width: 840px;
+  height: 880px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Styles for the scoring area */
+#scoring {
+  width: 840px;
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -760%);
 }

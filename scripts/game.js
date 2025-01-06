@@ -7,6 +7,7 @@ import { ScoreManager, LifeCount, FPSCounter, Timer } from "./scoring.js";
 import { Ghost } from "./ghosts.js";
 import { Win, Loss } from "./winLoss.js";
 import { collision } from "./collision.js";
+import { CONFIG } from "./config.js";
 
 const boundaries = [];
 const pellets = createPellets(map, Boundary);
@@ -17,8 +18,8 @@ const timerDisplay = new Timer(scoringBare);
 
 var player = new Player({
   position: {
-    x: Boundary.width * 10 + Boundary.width / 2,
-    y: Boundary.width * 3 + Boundary.width / 2,
+    x: CONFIG.Boundary.width * 10 + CONFIG.Boundary.width / 2,
+    y: CONFIG.Boundary.width * 3 + CONFIG.Boundary.width / 2,
   },
   velocity: {
     x: 0,
@@ -29,8 +30,8 @@ var player = new Player({
 const ghostPositions = {
   1: {
     position: {
-      x: Boundary.width * 8 + Boundary.width / 2,
-      y: Boundary.width * 9 + Boundary.width / 2,
+      x: CONFIG.Boundary.width * 8 + CONFIG.Boundary.width / 2,
+      y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
     },
     color: "red",
     behavior: "blinky",
@@ -38,8 +39,8 @@ const ghostPositions = {
   },
   2: {
     position: {
-      x: Boundary.width * 9 + Boundary.width / 2,
-      y: Boundary.width * 9 + Boundary.width / 2,
+      x: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
+      y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
     },
     color: "pink",
     behavior: "pinky",
@@ -47,8 +48,8 @@ const ghostPositions = {
   },
   3: {
     position: {
-      x: Boundary.width * 11 + Boundary.width / 2,
-      y: Boundary.width * 9 + Boundary.width / 2,
+      x: CONFIG.Boundary.width * 11 + CONFIG.Boundary.width / 2,
+      y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
     },
     color: "cyan",
     behavior: "inky",
@@ -56,8 +57,8 @@ const ghostPositions = {
   },
   4: {
     position: {
-      x: Boundary.width * 12 + Boundary.width / 2,
-      y: Boundary.width * 9 + Boundary.width / 2,
+      x: CONFIG.Boundary.width * 12 + CONFIG.Boundary.width / 2,
+      y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
     },
     color: "orange",
     behavior: "clyde",
@@ -85,8 +86,8 @@ map.forEach((row, i) => {
         boundaries.push(
           new Boundary({
             position: {
-              x: Boundary.width * j,
-              y: Boundary.height * i,
+              x: CONFIG.Boundary.width * j,
+              y: CONFIG.Boundary.height * i,
             },
           })
         );
@@ -98,8 +99,8 @@ map.forEach((row, i) => {
 export var ghosts = [
   new Ghost({
     position: {
-      x: Boundary.width * 8 + Boundary.width / 2,
-      y: Boundary.width * 9 + Boundary.width / 2,
+      x: CONFIG.Boundary.width * 8 + CONFIG.Boundary.width / 2,
+      y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
     },
     color: "red",
     behavior: "blinky",
@@ -107,8 +108,8 @@ export var ghosts = [
   }),
   new Ghost({
     position: {
-      x: Boundary.width * 9 + Boundary.width / 2,
-      y: Boundary.width * 9 + Boundary.width / 2,
+      x: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
+      y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
     },
     color: "pink",
     behavior: "pinky",
@@ -116,8 +117,8 @@ export var ghosts = [
   }),
   new Ghost({
     position: {
-      x: Boundary.width * 11 + Boundary.width / 2,
-      y: Boundary.width * 9 + Boundary.width / 2,
+      x: CONFIG.Boundary.width * 11 + CONFIG.Boundary.width / 2,
+      y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
     },
     color: "cyan",
     behavior: "inky",
@@ -125,8 +126,8 @@ export var ghosts = [
   }),
   new Ghost({
     position: {
-      x: Boundary.width * 12 + Boundary.width / 2,
-      y: Boundary.width * 9 + Boundary.width / 2,
+      x: CONFIG.Boundary.width * 12 + CONFIG.Boundary.width / 2,
+      y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
     },
     color: "orange",
     behavior: "clyde",
@@ -169,8 +170,8 @@ function recovery() {
   ghosts = [
     new Ghost({
       position: {
-        x: Boundary.width * 8 + Boundary.width / 2,
-        y: Boundary.width * 9 + Boundary.width / 2,
+        x: CONFIG.Boundary.width * 8 + CONFIG.Boundary.width / 2,
+        y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
       },
       color: "red",
       behavior: "blinky",
@@ -178,8 +179,8 @@ function recovery() {
     }),
     new Ghost({
       position: {
-        x: Boundary.width * 9 + Boundary.width / 2,
-        y: Boundary.width * 9 + Boundary.width / 2,
+        x: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
+        y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
       },
       color: "pink",
       behavior: "pinky",
@@ -187,8 +188,8 @@ function recovery() {
     }),
     new Ghost({
       position: {
-        x: Boundary.width * 11 + Boundary.width / 2,
-        y: Boundary.width * 9 + Boundary.width / 2,
+        x: CONFIG.Boundary.width * 11 + CONFIG.Boundary.width / 2,
+        y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
       },
       color: "cyan",
       behavior: "inky",
@@ -196,8 +197,8 @@ function recovery() {
     }),
     new Ghost({
       position: {
-        x: Boundary.width * 12 + Boundary.width / 2,
-        y: Boundary.width * 9 + Boundary.width / 2,
+        x: CONFIG.Boundary.width * 12 + CONFIG.Boundary.width / 2,
+        y: CONFIG.Boundary.width * 9 + CONFIG.Boundary.width / 2,
       },
       color: "orange",
       behavior: "clyde",
@@ -207,8 +208,8 @@ function recovery() {
 
   player = new Player({
     position: {
-      x: Boundary.width * 10 + Boundary.width / 2,
-      y: Boundary.width * 3 + Boundary.width / 2,
+      x: CONFIG.Boundary.width * 10 + CONFIG.Boundary.width / 2,
+      y: CONFIG.Boundary.width * 3 + CONFIG.Boundary.width / 2,
     },
     velocity: {
       x: 0,
@@ -432,27 +433,31 @@ function animate() {
 
     // Warping logic
     if (
-      player.position.y >= Boundary.height * 9 &&
-      player.position.y <= Boundary.height * 10
+      player.position.y >= CONFIG.Boundary.height * 9 &&
+      player.position.y <= CONFIG.Boundary.height * 10
     ) {
       let warped = false;
 
-      if (player.position.x > Boundary.width * 20) {
-        player.position.x = Boundary.width;
+      if (player.position.x > CONFIG.Boundary.width * 20) {
+        player.position.x = CONFIG.Boundary.width;
         warped = true;
       }
-      if (player.position.x < Boundary.width) {
-        player.position.x = Boundary.width * 20;
+      if (player.position.x < CONFIG.Boundary.width) {
+        player.position.x = CONFIG.Boundary.width * 20;
         warped = true;
       }
 
       if (warped) {
         for (let i = pellets.length - 1; i >= 0; i--) {
           const pellet = pellets[i];
-          if (pellet.position.y === Boundary.height * 9 + Boundary.height / 2) {
+          if (
+            pellet.position.y ===
+            CONFIG.Boundary.height * 9 + CONFIG.Boundary.height / 2
+          ) {
             if (
-              pellet.position.x === Boundary.width / 2 ||
-              pellet.position.x === Boundary.width * 20 + Boundary.width / 2
+              pellet.position.x === CONFIG.Boundary.width / 2 ||
+              pellet.position.x ===
+                CONFIG.Boundary.width * 20 + CONFIG.Boundary.width / 2
             ) {
               pellets.splice(i, 1);
               scoreManager.addPoints(10);
