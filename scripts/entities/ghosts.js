@@ -1,8 +1,8 @@
-import { gameArea } from "./structure.js";
-import { Boundary } from "./boundary.js";
-import { ghosts } from "./game.js";
-import { collision } from "./collision.js";
-import { CONFIG } from "./config.js";
+import { gameArea } from "../core/structure.js";
+import { Boundary } from "../environment/boundary.js";
+import { ghosts } from "../game.js";
+import { collision } from "../core/collision.js";
+import { CONFIG } from "../core/config.js";
 
 export class Ghost {
   constructor({ position, color, behavior, id }) {

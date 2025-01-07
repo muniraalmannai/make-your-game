@@ -1,5 +1,5 @@
-import { gameArea } from "./structure.js";
-import { lastKey } from "./game.js";
+import { gameArea } from "../core/structure.js";
+import { lastKey } from "../game.js";
 
 export class Player {
   constructor({ position, velocity }) {

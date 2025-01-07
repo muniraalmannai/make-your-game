@@ -23,6 +23,44 @@ The game uses a JavaScript-based engine to:
 3. Define distinct behaviors for each ghost (Blinky, Pinky, Inky, Clyde).
 4. Track player score, lives, and time, with real-time updates.
 
+## File Structure
+
+The scripts are structured as follows:
+
+```
+make-your-game/
+│
+├── images/                 # Folder for storing game-related images (e.g., sprites, icons)
+│
+├── css/
+│   └── styles.css          # Contains all the CSS for the project
+│
+├── scripts/                # JavaScript files for the game
+│   ├── core/               # Core game logic and shared modules
+│   │   ├── config.js       # Configuration constants for the game
+│   │   ├── collision.js    # Collision detection logic
+│   │   └── structure.js    # DOM structure setup
+│   │
+│   ├── entities/           # Game entities (e.g., player, ghosts, pellets)
+│   │   ├── player.js       # Player-specific logic and rendering
+│   │   ├── ghosts.js       # Ghost behaviors and rendering
+│   │   └── pellets.js      # Pellet management logic
+│   │
+│   ├── environment/        # Environment and game setup
+│   │   ├── map.js          # Map layout and structure
+│   │   └── boundary.js     # Boundary creation and logic
+│   │
+│   ├── ui/                 # UI elements like scoring, win/loss screens
+│   │   ├── scoring.js      # Score and lives management
+│   │   └── winLoss.js      # Win/Loss screens and logic
+│   │
+│   └── game.js             # Main game initialization and loop
+│
+├── index.html              # The main HTML file
+│
+└── README.md               # Documentation or instructions for the project
+```
+
 ### Features
 
 - **Dynamic Ghost AI**: Each ghost has a unique behavior pattern influenced by Pac-Man’s position and movement.
@@ -47,13 +85,16 @@ No external files are required. The game is fully interactive and played within 
 ### Key Components:
 
 1. **Maze Rendering**:
+
    - Maze boundaries and pellets are rendered based on a predefined 2D array.
    - Utilizes absolute positioning for precise placements.
 
 2. **Collision Logic**:
+
    - Pac-Man's collisions with ghosts, boundaries, and pellets are handled using circular and rectangular geometric checks.
 
 3. **Ghost AI**:
+
    - Each ghost's behavior adapts dynamically to Pac-Man’s position and direction.
    - Scatter mode targets specific corners of the maze.
 
@@ -61,6 +102,7 @@ No external files are required. The game is fully interactive and played within 
    - Start, pause, and end states are implemented with event listeners and DOM manipulation.
 
 ### Testing:
+
 - Each feature was tested in isolation for stability and accuracy.
 - Debugging included logging movements, verifying collision accuracy, and ensuring UI responsiveness.
 

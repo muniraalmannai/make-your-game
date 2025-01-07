@@ -1,13 +1,13 @@
-import { scoringBare } from "./structure.js";
-import { Boundary } from "./boundary.js";
+import { scoringBare } from "./core/structure.js";
+import { Boundary } from "./environment/boundary.js";
 import { Player } from "./player.js";
-import { map } from "./map.js";
+import { map } from "./environment/map.js";
 import { createPellets } from "./pellets.js";
-import { ScoreManager, LifeCount, FPSCounter, Timer } from "./scoring.js";
-import { Ghost } from "./ghosts.js";
-import { Win, Loss } from "./winLoss.js";
-import { collision } from "./collision.js";
-import { CONFIG } from "./config.js";
+import { ScoreManager, LifeCount, FPSCounter, Timer } from "./ui/scoring.js";
+import { Ghost } from "./entities/ghosts.js";
+import { Win, Loss } from "./ui/winLoss.js";
+import { collision } from "./core/collision.js";
+import { CONFIG } from "./core/config.js";
 
 const boundaries = [];
 const pellets = createPellets(map, Boundary);
@@ -15,7 +15,6 @@ const scoreManager = new ScoreManager(scoringBare);
 const lifeCount = new LifeCount(scoringBare);
 const fpsCounter = new FPSCounter(scoringBare);
 const timerDisplay = new Timer(scoringBare);
-
 
 var player = new Player({
   position: {
@@ -138,7 +137,7 @@ export var ghosts = [
 
 function GhostResolve(ghost_id) {
   // Find the ghost that needs to be reset
-  const ghostIndex = ghosts.findIndex(ghost => ghost.id === ghost_id);
+  const ghostIndex = ghosts.findIndex((ghost) => ghost.id === ghost_id);
   if (ghostIndex === -1) return;
 
   // Remove the old ghost
@@ -148,17 +147,16 @@ function GhostResolve(ghost_id) {
   const newGhost = new Ghost({
     position: {
       x: ghostPositions[ghost_id].position.x,
-      y: ghostPositions[ghost_id].position.y
+      y: ghostPositions[ghost_id].position.y,
     },
     color: ghostPositions[ghost_id].color,
     behavior: ghostPositions[ghost_id].behavior,
-    id: ghost_id
+    id: ghost_id,
   });
 
   // Replace the old ghost with the new one
   ghosts[ghostIndex] = newGhost;
 }
-
 
 start();
 timerDisplay.stop(); //stops the timer before the game starts
@@ -290,7 +288,6 @@ function animate() {
       }
     }
 
-
     // Ghost collision prevention
     for (let i = 0; i < ghosts.length; i++) {
       for (let j = i + 1; j < ghosts.length; j++) {
@@ -378,10 +375,10 @@ function animate() {
       ghost.update(player, boundaries);
 
       if (ghost.velocity.x == 0 && ghost.velocity.y == 0) {
-        console.log(ghost.id)
+        console.log(ghost.id);
         GhostResolve(ghost.id);
-      }else{
-          // Check for ghost collision with player
+      } else {
+        // Check for ghost collision with player
         if (
           Math.hypot(
             ghost.position.x - player.position.x,
@@ -487,13 +484,10 @@ function togglePause() {
   }
 }
 
-
 function start() {
-
   // Create the start screen container
   const startScreen = document.createElement("div");
   startScreen.id = "start-screen";
-
 
   startScreen.style.display = "flex";
   startScreen.style.justifyContent = "center";
@@ -537,18 +531,16 @@ function start() {
 
   // Add event listener to the button to start the game
   startButton.addEventListener("click", () => {
-
-    startScreen.style.display = "none";   // Hide the start screen
+    startScreen.style.display = "none"; // Hide the start screen
     isPaused = false;
     timerDisplay.start(); // Starts the timer
     started = true;
     console.log(isPaused);
-
   });
 }
 
 function pause() {
-  if (started) {  
+  if (started) {
     isPaused = true;
     timeScale = 0; // Stop all movement
     timerDisplay.stop(); // Stops the timer
@@ -640,7 +632,6 @@ function pause() {
     } else {
       pauseOverlay.style.display = "flex";
     }
-
   }
 }
 function unpause() {

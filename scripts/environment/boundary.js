@@ -1,5 +1,5 @@
-import { gameArea } from "./structure.js";
-import { CONFIG } from "./config.js";
+import { gameArea } from "../core/structure.js";
+import { CONFIG } from "../core/config.js";
 
 export class Boundary {
   static width = CONFIG.Boundary.width;
