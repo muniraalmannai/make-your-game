@@ -22,3 +22,22 @@ export class Boundary {
     gameArea.appendChild(this.element);
   }
 }
+
+export function initBoundaries(map) {
+  const boundaries = [];
+  map.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+      if (symbol === "-") {
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: CONFIG.Boundary.width * j,
+              y: CONFIG.Boundary.height * i,
+            },
+          })
+        );
+      }
+    });
+  });
+  return boundaries;
+}

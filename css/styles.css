@@ -32,6 +32,21 @@ body {
   transform: translate(-50%, -760%);
 }
 
+/* Contrainer to box the game area */
+#game-wrapper {
+  width: 840px;
+  height: 880px;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+  border: 4px solid black;
+}
+
+#game-container {
+  width: 100%;
+  height: 100%;
+}
+
 /* #start-screen {
   display: flex; 
   justify-content: center; 
