@@ -479,7 +479,7 @@ function animate() {
 
 function togglePause() {
   if (!gameOver) {
-    if (isPaused) {
+    if (isPaused && started) {
       unpause();
     } else {
       pause();
@@ -548,99 +548,101 @@ function start() {
 }
 
 function pause() {
-  isPaused = true;
-  timeScale = 0; // Stop all movement
-  timerDisplay.stop(); // Stops the timer
-  let pauseOverlay = document.getElementById("pause-overlay");
+  if (started) {  
+    isPaused = true;
+    timeScale = 0; // Stop all movement
+    timerDisplay.stop(); // Stops the timer
+    let pauseOverlay = document.getElementById("pause-overlay");
 
-  if (!pauseOverlay) {
-    pauseOverlay = document.createElement("div");
-    pauseOverlay.id = "pause-overlay";
-    pauseOverlay.style.position = "fixed";
-    pauseOverlay.style.top = "0";
-    pauseOverlay.style.left = "0";
-    pauseOverlay.style.width = "100%";
-    pauseOverlay.style.height = "100%";
-    pauseOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-    pauseOverlay.style.color = "white";
-    pauseOverlay.style.fontFamily =
-      "'Press Start 2P', Helvetica, Arial, sans-serif";
-    pauseOverlay.style.textAlign = "center";
-    pauseOverlay.style.display = "flex";
-    pauseOverlay.style.flexDirection = "column";
-    pauseOverlay.style.alignItems = "center";
-    pauseOverlay.style.justifyContent = "center";
-    pauseOverlay.style.zIndex = "1000";
-    pauseOverlay.style.boxShadow = "0 0 20px rgba(0, 0, 0, 0.9)";
+    if (!pauseOverlay) {
+      pauseOverlay = document.createElement("div");
+      pauseOverlay.id = "pause-overlay";
+      pauseOverlay.style.position = "fixed";
+      pauseOverlay.style.top = "0";
+      pauseOverlay.style.left = "0";
+      pauseOverlay.style.width = "100%";
+      pauseOverlay.style.height = "100%";
+      pauseOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+      pauseOverlay.style.color = "white";
+      pauseOverlay.style.fontFamily =
+        "'Press Start 2P', Helvetica, Arial, sans-serif";
+      pauseOverlay.style.textAlign = "center";
+      pauseOverlay.style.display = "flex";
+      pauseOverlay.style.flexDirection = "column";
+      pauseOverlay.style.alignItems = "center";
+      pauseOverlay.style.justifyContent = "center";
+      pauseOverlay.style.zIndex = "1000";
+      pauseOverlay.style.boxShadow = "0 0 20px rgba(0, 0, 0, 0.9)";
 
-    const pauseText = document.createElement("div");
-    pauseText.textContent = "Game Paused";
-    pauseText.style.fontSize = "80px";
-    pauseText.style.fontFamily =
-      "'Press Start 2P', Helvetica, Arial, sans-serif";
-    pauseText.style.textShadow = "2px 2px 5px rgba(0, 0, 0, 0.7)";
-    pauseText.style.marginBottom = "30px";
+      const pauseText = document.createElement("div");
+      pauseText.textContent = "Game Paused";
+      pauseText.style.fontSize = "80px";
+      pauseText.style.fontFamily =
+        "'Press Start 2P', Helvetica, Arial, sans-serif";
+      pauseText.style.textShadow = "2px 2px 5px rgba(0, 0, 0, 0.7)";
+      pauseText.style.marginBottom = "30px";
 
-    const buttonContainer = document.createElement("div");
-    buttonContainer.style.display = "flex";
-    buttonContainer.style.gap = "20px";
+      const buttonContainer = document.createElement("div");
+      buttonContainer.style.display = "flex";
+      buttonContainer.style.gap = "20px";
 
-    const continueButton = document.createElement("button");
-    continueButton.textContent = "Continue";
-    continueButton.style.padding = "15px 30px";
-    continueButton.style.backgroundColor = "#007BFF";
-    continueButton.style.color = "white";
-    continueButton.style.border = "none";
-    continueButton.style.borderRadius = "8px";
-    continueButton.style.fontSize = "24px";
-    continueButton.style.cursor = "pointer";
-    continueButton.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
-    continueButton.style.transition = "background-color 0.3s, transform 0.2s";
-    continueButton.style.fontFamily =
-      "'Press Start 2P', Helvetica, Arial, sans-serif";
-    continueButton.onmouseover = () =>
-      (continueButton.style.backgroundColor = "#0056b3");
-    continueButton.onmouseout = () =>
-      (continueButton.style.backgroundColor = "#007BFF");
-    continueButton.onmousedown = () =>
-      (continueButton.style.transform = "scale(0.95)");
-    continueButton.onmouseup = () =>
-      (continueButton.style.transform = "scale(1)");
-    continueButton.onclick = unpause;
+      const continueButton = document.createElement("button");
+      continueButton.textContent = "Continue";
+      continueButton.style.padding = "15px 30px";
+      continueButton.style.backgroundColor = "#007BFF";
+      continueButton.style.color = "white";
+      continueButton.style.border = "none";
+      continueButton.style.borderRadius = "8px";
+      continueButton.style.fontSize = "24px";
+      continueButton.style.cursor = "pointer";
+      continueButton.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+      continueButton.style.transition = "background-color 0.3s, transform 0.2s";
+      continueButton.style.fontFamily =
+        "'Press Start 2P', Helvetica, Arial, sans-serif";
+      continueButton.onmouseover = () =>
+        (continueButton.style.backgroundColor = "#0056b3");
+      continueButton.onmouseout = () =>
+        (continueButton.style.backgroundColor = "#007BFF");
+      continueButton.onmousedown = () =>
+        (continueButton.style.transform = "scale(0.95)");
+      continueButton.onmouseup = () =>
+        (continueButton.style.transform = "scale(1)");
+      continueButton.onclick = unpause;
 
-    const resetButton = document.createElement("button");
-    resetButton.textContent = "Reset Game";
-    resetButton.style.padding = "15px 30px";
-    resetButton.style.backgroundColor = "#007BFF";
-    resetButton.style.color = "white";
-    resetButton.style.border = "none";
-    resetButton.style.borderRadius = "8px";
-    resetButton.style.fontSize = "24px";
-    resetButton.style.cursor = "pointer";
-    resetButton.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
-    resetButton.style.transition = "background-color 0.3s, transform 0.2s";
-    resetButton.style.fontFamily =
-      "'Press Start 2P', Helvetica, Arial, sans-serif";
-    resetButton.onmouseover = () =>
-      (resetButton.style.backgroundColor = "#0056b3");
-    resetButton.onmouseout = () =>
-      (resetButton.style.backgroundColor = "#007BFF");
-    resetButton.onmousedown = () =>
-      (resetButton.style.transform = "scale(0.95)");
-    resetButton.onmouseup = () => (resetButton.style.transform = "scale(1)");
-    resetButton.onclick = resetGame;
+      const resetButton = document.createElement("button");
+      resetButton.textContent = "Reset Game";
+      resetButton.style.padding = "15px 30px";
+      resetButton.style.backgroundColor = "#007BFF";
+      resetButton.style.color = "white";
+      resetButton.style.border = "none";
+      resetButton.style.borderRadius = "8px";
+      resetButton.style.fontSize = "24px";
+      resetButton.style.cursor = "pointer";
+      resetButton.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+      resetButton.style.transition = "background-color 0.3s, transform 0.2s";
+      resetButton.style.fontFamily =
+        "'Press Start 2P', Helvetica, Arial, sans-serif";
+      resetButton.onmouseover = () =>
+        (resetButton.style.backgroundColor = "#0056b3");
+      resetButton.onmouseout = () =>
+        (resetButton.style.backgroundColor = "#007BFF");
+      resetButton.onmousedown = () =>
+        (resetButton.style.transform = "scale(0.95)");
+      resetButton.onmouseup = () => (resetButton.style.transform = "scale(1)");
+      resetButton.onclick = resetGame;
 
-    buttonContainer.appendChild(continueButton);
-    buttonContainer.appendChild(resetButton);
+      buttonContainer.appendChild(continueButton);
+      buttonContainer.appendChild(resetButton);
 
-    pauseOverlay.appendChild(pauseText);
-    pauseOverlay.appendChild(buttonContainer);
-    document.body.appendChild(pauseOverlay);
-  } else {
-    pauseOverlay.style.display = "flex";
+      pauseOverlay.appendChild(pauseText);
+      pauseOverlay.appendChild(buttonContainer);
+      document.body.appendChild(pauseOverlay);
+    } else {
+      pauseOverlay.style.display = "flex";
+    }
+
   }
 }
-
 function unpause() {
   isPaused = false;
   timeScale = 1;
