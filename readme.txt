@@ -1,71 +1,90 @@
-# make-your-game
+# Pac-Man Game (make-your-game)
 
-This is a simple Pac-Man-like game built with pure HTML, CSS, and JavaScript. The goal of the game is to create a smooth and responsive experience while maintaining a consistent 60 FPS. The game includes features such as moving Pac-Man, collecting pellets, avoiding ghosts, a timer, a score, a pause menu, and more. The game runs entirely on the browser with no external libraries or frameworks.
+![Pac-Man Artwork](https://upload.wikimedia.org/wikipedia/commons/0/0d/Pacman.svg)
 
-## Features
+This project, **make-your-game**, is a browser-based simulation inspired by the classic Pac-Man game. The objective is to navigate a maze, collecting pellets, avoiding ghosts, and reaching the highest score possible. The game includes features like warp tunnels, dynamic ghost behaviors, and animations for a visually engaging experience.
 
-- **Smooth 60 FPS Gameplay**: The game ensures consistent motion with no frame drops using `requestAnimationFrame`.
-- **Player Movement**: The player controls Pac-Man using the WASD keys for up/down/left/right movement.
-- **Pellet Collection**: Pac-Man collects pellets to increase the score and progress through the game.
-- **Ghost Enemies**: Ghosts roam the maze and chase Pac-Man. The game ends if Pac-Man collides with a ghost.
-- **Power Pellets**: Eating power pellets temporarily makes Pac-Man invincible and allows him to eat ghosts.
-- **Pause Menu**: The game includes a pause menu with options to resume or restart the game.
-- **Scoreboard and Timer**: The game displays the player's score, remaining lives, and a countdown timer.
-- **Collision Detection**: The game checks for collisions between Pac-Man, pellets, walls, and ghosts.
+## Project Overview
 
-## Getting Started
+The program simulates Pac-Man's journey through a grid-based maze while adhering to the original game's mechanics. The player controls Pac-Man's movement and must:
 
-### Prerequisites
+1. Collect all pellets.
+2. Avoid getting caught by the ghosts.
+3. Use warp tunnels strategically to outsmart ghosts.
 
-- A modern web browser (Chrome, Firefox, Safari, etc.).
-- No external dependencies; everything is implemented using plain JavaScript, HTML, and CSS.
+Ghosts follow unique movement patterns, dynamically targeting Pac-Man while occasionally entering scatter mode.
 
-### Installation
+### How It Works
 
-1. Download or clone this repository:
-    ```bash
-    git clone https://github.com/yourusername/pacman-game.git
-    ```
+The game uses a JavaScript-based engine to:
 
-2. Open the `index.html` file in your browser.
+1. Render the maze, pellets, player, and ghost positions dynamically.
+2. Implement collision detection using geometric calculations.
+3. Define distinct behaviors for each ghost (Blinky, Pinky, Inky, Clyde).
+4. Track player score, lives, and time, with real-time updates.
 
-### Running the Game
+### Features
 
-1. Open the game in your browser.
-2. Use the WASD keys to control Pac-Man:
-   - **W**: Move up.
-   - **S**: Move down.
-   - **A**: Move left.
-   - **D**: Move right.
+- **Dynamic Ghost AI**: Each ghost has a unique behavior pattern influenced by Pac-Man’s position and movement.
+- **Warp Tunnels**: Allow Pac-Man to traverse between edges of the maze instantly.
+- **Interactive Start Screen**: Players can start or reset the game with a polished UI.
+- **Responsive Gameplay**: Collision detection ensures accurate player and ghost interactions.
+- **Score and Timer Display**: Real-time scoring, life count, and timer for an engaging experience.
+- **Pause/Resume Functionality**: Allows players to pause and continue the game seamlessly.
 
-### Pause Menu Controls
+## Input Format
 
-- **P**: Pause the game and show the pause menu.
-- **Resume**: Click the "Resume" button in the pause menu to continue the game.
-- **Restart**: Click the "Restart" button in the pause menu to restart the game.
+No external files are required. The game is fully interactive and played within the browser.
 
-### Gameplay
+## Constraints
 
-- **Objective**: Collect all the pellets while avoiding ghosts. The game ends when you run out of lives or clear all the pellets.
-- **Power Pellets**: Eating a power pellet lets Pac-Man temporarily eat ghosts for extra points.
-- **Timer**: The countdown timer will indicate how much time is left before the game ends.
-- **Score**: The score increases as you collect pellets and eat ghosts.
-- **Lives**: You start with 3 lives. Lose a life when colliding with ghosts without invincibility.
+- Ghosts cannot overlap or pass through maze boundaries.
+- Pellets are consumed only when Pac-Man collides with them.
+- The game ends when Pac-Man loses all lives or collects all pellets.
 
-## Game Structure
+## Development and Testing
 
-- **index.html**: The main HTML structure, where the game elements are rendered.
-- **game.js**: The main game logic, including handling movement, collisions, and rendering.
-- **styles.css**: Basic styling for the game container and elements.
+### Key Components:
 
-## Future Enhancements
+1. **Maze Rendering**:
+   - Maze boundaries and pellets are rendered based on a predefined 2D array.
+   - Utilizes absolute positioning for precise placements.
 
-- Add more maze layouts and difficulty levels.
-- Improve the visuals with sprites and animations.
-- Implement additional power-ups or bonus items.
-- Add background music and sound effects for actions (e.g., eating pellets, collisions).
+2. **Collision Logic**:
+   - Pac-Man's collisions with ghosts, boundaries, and pellets are handled using circular and rectangular geometric checks.
 
----
+3. **Ghost AI**:
+   - Each ghost's behavior adapts dynamically to Pac-Man’s position and direction.
+   - Scatter mode targets specific corners of the maze.
 
-**Enjoy the game and feel free to contribute!**
+4. **Game States**:
+   - Start, pause, and end states are implemented with event listeners and DOM manipulation.
 
+### Testing:
+- Each feature was tested in isolation for stability and accuracy.
+- Debugging included logging movements, verifying collision accuracy, and ensuring UI responsiveness.
+
+## Usage
+
+To run the game, open the `index.html` file in any modern browser:
+
+```bash
+open index.html
+```
+
+## Example Gameplay
+
+1. Navigate Pac-Man using the **W**, **A**, **S**, **D** keys.
+2. Avoid ghosts while collecting pellets to increase your score.
+3. Use the pause feature (**P**) or restart the game at any time.
+
+## Authors
+
+- Ali Marhoon
+- Munira Almannai
+- Salah Yuksel
+
+## License
+
+This project is for educational purposes as part of a coursework assignment.  
+Source code available at [make-your-game](https://learn.reboot01.com/git/alimarhoon/make-your-game).
