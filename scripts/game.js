@@ -16,6 +16,8 @@ const lifeCount = new LifeCount(scoringBare);
 const fpsCounter = new FPSCounter(scoringBare);
 const timerDisplay = new Timer(scoringBare);
 
+start();
+
 var player = new Player({
   position: {
     x: CONFIG.Boundary.width * 10 + CONFIG.Boundary.width / 2,
@@ -481,6 +483,73 @@ function togglePause() {
     }
   }
 }
+
+
+function start() {
+
+  // Create the start screen container
+  const startScreen = document.createElement("div");
+  startScreen.id = "start-screen";
+
+
+  startScreen.style.display = "flex";
+  startScreen.style.justifyContent = "center";
+  startScreen.style.alignItems = "center";
+  startScreen.style.position = "fixed";
+  startScreen.style.top = "0";
+  startScreen.style.left = "0";
+  startScreen.style.width = "100%";
+  startScreen.style.height = "100%";
+  startScreen.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+  startScreen.style.zIndex = "1000";
+  startScreen.style.flexDirection = "column";
+
+  // Create the title
+  const title = document.createElement("h1");
+  title.textContent = "Pacman Game";
+  title.style.color = "white";
+  title.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
+  title.style.textShadow = "2px 2px 5px rgba(0, 0, 0, 0.7)";
+  title.style.marginBottom = "30px";
+
+  startScreen.appendChild(title);
+
+  // Create the start button
+  const startButton = document.createElement("button");
+  startButton.id = "start-button";
+  startButton.textContent = "Start Game";
+  Object.assign(startButton.style, {
+    padding: "15px 30px",
+    backgroundColor: "#007BFF",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    fontSize: "24px",
+    cursor: "pointer",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    fontFamily: "'Press Start 2P', Helvetica, Arial, sans-serif",
+  });
+  startScreen.appendChild(startButton);
+  document.body.appendChild(startScreen);
+
+  // Add event listener to the button to start the game
+  startButton.addEventListener("click", () => {
+    // Hide the start screen
+    startScreen.style.display = "none";
+
+    // Call the function to start your game logic
+    initializeGame();
+  });
+}
+
+function initializeGame() {
+  console.log("Game Started!");
+  timeScale = 1;
+}
+
+
+
+isPaused = true; // Initially pause the game
 
 function pause() {
   isPaused = true;
