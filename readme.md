@@ -1,6 +1,6 @@
 # Pac-Man Game (make-your-game)
 
-![Pac-Man Artwork](https://upload.wikimedia.org/wikipedia/commons/0/0d/Pacman.svg)
+![image](images/pacman.png)
 
 This project, **make-your-game**, is a browser-based simulation inspired by the classic Pac-Man game. The objective is to navigate a maze, collecting pellets, avoiding ghosts, and reaching the highest score possible. The game includes features like warp tunnels, dynamic ghost behaviors, and animations for a visually engaging experience.
 
