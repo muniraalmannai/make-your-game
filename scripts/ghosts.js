@@ -50,8 +50,16 @@ export class Ghost {
     gameArea.appendChild(this.element);
   }
   update(player, boundaries) {
+    const boundaryWidth = CONFIG.Boundary.width * 21;
+    const boundaryHeight = CONFIG.Boundary.height * 22;
+
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
+
+    if (this.position.x < 0) this.position.x = 0;
+    if (this.position.x > boundaryWidth) this.position.x = boundaryWidth;
+    if (this.position.y < 0) this.position.y = 0;
+    if (this.position.y > boundaryHeight) this.position.y = boundaryHeight;
 
     this.element.style.left = `${this.position.x - 12}px`;
     this.element.style.top = `${this.position.y - 12}px`;

@@ -16,7 +16,6 @@ const lifeCount = new LifeCount(scoringBare);
 const fpsCounter = new FPSCounter(scoringBare);
 const timerDisplay = new Timer(scoringBare);
 
-start();
 
 var player = new Player({
   position: {
@@ -161,6 +160,10 @@ function GhostResolve(ghost_id) {
 }
 
 
+start();
+timerDisplay.stop(); //stops the timer before the game starts
+isPaused = true; // Initially pause the game
+let started = false; // If game is unpaused before starting, game shouldnt start
 
 function recovery() {
   player.erase();
@@ -534,22 +537,15 @@ function start() {
 
   // Add event listener to the button to start the game
   startButton.addEventListener("click", () => {
-    // Hide the start screen
-    startScreen.style.display = "none";
 
-    // Call the function to start your game logic
-    initializeGame();
+    startScreen.style.display = "none";   // Hide the start screen
+    isPaused = false;
+    timerDisplay.start(); // Starts the timer
+    started = true;
+    console.log(isPaused);
+
   });
 }
-
-function initializeGame() {
-  console.log("Game Started!");
-  timeScale = 1;
-}
-
-
-
-isPaused = true; // Initially pause the game
 
 function pause() {
   isPaused = true;
