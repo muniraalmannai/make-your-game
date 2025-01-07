@@ -59,3 +59,43 @@ body {
   flex-direction: column;
   color: white;
 } */
+
+/* Styles for ghosts */
+.ghost {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px 15px 0 0;
+  position: absolute;
+  transition: transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.eye {
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.eye-left {
+  left: 8px;
+  top: 8px;
+}
+
+.eye-right {
+  right: 8px;
+  top: 8px;
+}
+
+.pupil {
+  width: 4px;
+  height: 4px;
+  background-color: black;
+  border-radius: 50%;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+}

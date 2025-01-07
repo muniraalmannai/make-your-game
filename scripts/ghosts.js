@@ -23,57 +23,26 @@ export class Ghost {
 
     // Create ghost element
     this.element = document.createElement("div");
-    this.element.style.width = "30px";
-    this.element.style.height = "30px";
-    this.element.style.backgroundColor = color;
-    this.element.style.borderRadius = "15px 15px 0 0"; // Rounded top, flat bottom
-    this.element.style.position = "absolute";
-    this.element.style.left = `${this.position.x}px`;
-    this.element.style.top = `${this.position.y}px`;
-    this.element.style.transition = "transform 0.1s";
-    this.element.style.display = "flex";
-    this.element.style.alignItems = "center";
-    this.element.style.justifyContent = "center";
-    this.element.style.overflow = "hidden";
+    this.element.classList.add("ghost");
+    this.element.style.backgroundColor = this.color;
+
+    // Set initial position
+    this.element.style.left = `${this.position.x - this.radius}px`;
+    this.element.style.top = `${this.position.y - this.radius}px`;
+
     // Create eyes
     const eyeLeft = document.createElement("div");
-    eyeLeft.style.width = "8px";
-    eyeLeft.style.height = "8px";
-    eyeLeft.style.backgroundColor = "white";
-    eyeLeft.style.borderRadius = "50%";
-    eyeLeft.style.position = "absolute";
-    eyeLeft.style.left = "8px";
-    eyeLeft.style.top = "8px";
-
     const eyeRight = document.createElement("div");
-    eyeRight.style.width = "8px";
-    eyeRight.style.height = "8px";
-    eyeRight.style.backgroundColor = "white";
-    eyeRight.style.borderRadius = "50%";
-    eyeRight.style.position = "absolute";
-    eyeRight.style.right = "8px";
-    eyeRight.style.top = "8px";
-
     const pupilLeft = document.createElement("div");
-    pupilLeft.style.width = "4px";
-    pupilLeft.style.height = "4px";
-    pupilLeft.style.backgroundColor = "black";
-    pupilLeft.style.borderRadius = "50%";
-    pupilLeft.style.position = "absolute";
-    pupilLeft.style.left = "2px";
-    pupilLeft.style.top = "2px";
-    eyeLeft.appendChild(pupilLeft);
-
     const pupilRight = document.createElement("div");
-    pupilRight.style.width = "4px";
-    pupilRight.style.height = "4px";
-    pupilRight.style.backgroundColor = "black";
-    pupilRight.style.borderRadius = "50%";
-    pupilRight.style.position = "absolute";
-    pupilRight.style.left = "2px";
-    pupilRight.style.top = "2px";
-    eyeRight.appendChild(pupilRight);
 
+    eyeLeft.classList.add("eye", "eye-left");
+    eyeRight.classList.add("eye", "eye-right");
+    pupilLeft.classList.add("pupil");
+    pupilRight.classList.add("pupil");
+
+    eyeLeft.appendChild(pupilLeft);
+    eyeRight.appendChild(pupilRight);
     this.element.appendChild(eyeLeft);
     this.element.appendChild(eyeRight);
 
