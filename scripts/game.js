@@ -1,8 +1,8 @@
 import { scoringBare } from "./core/structure.js";
 import { Boundary } from "./environment/boundary.js";
-import { Player } from "./player.js";
+import { Player } from "./entities/player.js";
 import { map } from "./environment/map.js";
-import { createPellets } from "./pellets.js";
+import { createPellets } from "./entities/pellets.js";
 import { ScoreManager, LifeCount, FPSCounter, Timer } from "./ui/scoring.js";
 import { Ghost } from "./entities/ghosts.js";
 import { Win, Loss } from "./ui/winLoss.js";
