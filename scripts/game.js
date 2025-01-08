@@ -1,13 +1,14 @@
-import { scoringBare } from "./core/structure.js";
+import { gameArea, scoringBare} from "./core/structure.js";
 import { Boundary } from "./environment/boundary.js";
 import { Player } from "./entities/player.js";
 import { map } from "./environment/map.js";
 import { createPellets } from "./entities/pellets.js";
-import { ScoreManager, LifeCount, FPSCounter, Timer } from "./ui/scoring.js";
+import { ScoreManager, LifeCount, FPSCounter, Timer, controlBar } from "./ui/scoring.js";
 import { Ghost } from "./entities/ghosts.js";
 import { Win, Loss } from "./ui/winLoss.js";
 import { collision } from "./core/collision.js";
 import { CONFIG } from "./core/config.js";
+import { control } from "./core/structure.js";
 
 const boundaries = [];
 const pellets = createPellets(map, Boundary);
@@ -15,45 +16,9 @@ const scoreManager = new ScoreManager(scoringBare);
 const lifeCount = new LifeCount(scoringBare);
 const fpsCounter = new FPSCounter(scoringBare);
 const timerDisplay = new Timer(scoringBare);
+const controls = new controlBar(gameArea);
 
-// Create the controls container
-const controls = document.createElement('div');
-controls.id = 'controls';
-controls.style.width = '840px';
-controls.style.height = '80px';
-controls.style.position = 'absolute';
-controls.style.left = '50%';
-controls.style.top = '93%'; // Position it below the game area
-controls.style.transform = 'translate(-50%, -50%)';
-controls.style.backgroundColor = 'black';
-controls.style.color = 'white';
-controls.style.textAlign = 'left';
-controls.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
-controls.style.padding = '10px';
-controls.style.boxSizing = 'border-box';
-controls.style.border = '4px solid blue';
-controls.style.borderRadius = '4px';
-controls.style.display = 'flex'; 
-controls.style.justifyContent = 'space-between'; // Spread items horizontally
-controls.style.alignItems = 'center'; // Center vertically
 
-// Create the control descriptions as spans
-const moveControl = document.createElement('span');
-moveControl.textContent = 'WASD to move';
-
-const pauseControl = document.createElement('span');
-pauseControl.textContent = 'P to pause & unpause';
-
-const resetControl = document.createElement('span');
-resetControl.textContent = 'R to reset';
-// Append the spans to the controls container
-controls.appendChild(moveControl);
-controls.appendChild(pauseControl);
-controls.appendChild(resetControl);
-
-// Append the controls container to the game container
-const gameContainer = document.getElementById('game-container');
-gameContainer.appendChild(controls);
 
 var player = new Player({
   position: {

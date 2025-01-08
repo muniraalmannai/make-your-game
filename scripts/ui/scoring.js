@@ -51,6 +51,48 @@ export class LifeCount {
     }
 }
 
+export class controlBar{
+    constructor(gameArea){
+        // Create the controls container
+        const controls = document.createElement('div');
+        controls.id = 'controls';
+        controls.style.width = '840px';
+        controls.style.height = '80px';
+        controls.style.position = 'absolute';
+        controls.style.left = '50%';
+        controls.style.top = '106%'; // Position it below the game area
+        controls.style.transform = 'translate(-50%, -50%)';
+        controls.style.backgroundColor = 'black';
+        controls.style.color = 'white';
+        controls.style.textAlign = 'left';
+        controls.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
+        controls.style.padding = '10px';
+        controls.style.boxSizing = 'border-box';
+        controls.style.border = '4px solid blue';
+        controls.style.borderRadius = '4px';
+        controls.style.display = 'flex'; 
+        controls.style.justifyContent = 'space-between'; // Spread items horizontally
+        controls.style.alignItems = 'center'; // Center vertically
+
+        // Create the control descriptions as spans
+        const moveControl = document.createElement('span');
+        moveControl.textContent = 'WASD to move';
+
+        const pauseControl = document.createElement('span');
+        pauseControl.textContent = 'P to pause & unpause';
+
+        const resetControl = document.createElement('span');
+        resetControl.textContent = 'R to reset';
+        // Append the spans to the controls container
+        controls.appendChild(moveControl);
+        controls.appendChild(pauseControl);
+        controls.appendChild(resetControl);
+
+        // Append the controls container to the game container
+        gameArea.appendChild(controls);
+    }
+}
+
 export class FPSCounter {
     constructor(scoringBare) {
         this.fps = 0;
