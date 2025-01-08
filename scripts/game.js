@@ -508,6 +508,7 @@ function start() {
   // Create the title
   const title = document.createElement("h1");
   title.textContent = "Pacman Game";
+  title.style.fontSize = "80px";
   title.style.color = "white";
   title.style.fontFamily = "'Press Start 2P', Helvetica, Arial, sans-serif";
   title.style.textShadow = "2px 2px 5px rgba(0, 0, 0, 0.7)";
