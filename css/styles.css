@@ -5,12 +5,12 @@ body {
 }
 
 /* Styles for the game container */
-#game-container {
+/* #game-container {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   border: 1px solid black;
-}
+} */
 
 /* Styles for the game area */
 #game {
@@ -32,7 +32,7 @@ body {
   transform: translate(-50%, -760%);
 }
 
-/* Contrainer to box the game area */
+Contrainer to box the game area
 #game-wrapper {
   width: 840px;
   height: 880px;
